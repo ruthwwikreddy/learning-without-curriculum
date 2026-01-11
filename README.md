@@ -55,7 +55,7 @@ My data comes from a few key places:
 Instead of using grades or certificates to measure learning, I looked at whether my projects actually worked and were used by others. This feels more true to how builders like me actually prove their skills.
 
 
-![Learning Milestones of an Independent Student Builder (2021-2025)](assets/image.png)
+![Learning Milestones of an Independent Student Builder (2021-2025)](assets/timeline.png)
 
 
 ### 3.3 Data Analysis
@@ -82,6 +82,10 @@ My findings show that learning without a curriculum isn’t random. Instead, it�
 ### 4.1 Skill Acquisition Triggers: The "Need" in Need–Build–Validate
 
 I found that my learning was always kicked off by a specific, identifiable need. It wasn't about following a syllabus; it was about solving a problem that was right in front of me. I identified five main types of triggers:
+
+![Breakdown of Learning Triggers (2021-2025)](assets/piechart.png)
+
+**Figure 1: Breakdown of Learning Triggers (2021-2025).** This chart shows the distribution of the five primary triggers that initiated learning episodes. "Problem-Driven" is the most common, highlighting the importance of authentic challenges. The examples provided are representative, not exhaustive.
 
 **Figure 1: Breakdown of Learning Triggers (2021-2025).** This chart shows the distribution of the five primary triggers that initiated learning episodes. "Problem-Driven" is the most common, highlighting the importance of authentic challenges. The examples provided are representative, not exhaustive.
 
@@ -113,6 +117,8 @@ I also learned a lot from other people. Seeing how other developers solved probl
 
 In school, you learn things in a straight line: start with the basics and move to advanced topics. My learning was never like that. It was messy and non-linear, and I identified three main patterns. This non-linear approach is a direct result of the learning triggers; for example, a **problem-driven trigger** often leads to **just-in-time learning**, as the need to solve a specific problem encourages a focused, deep dive into a particular skill.
 
+![Patterns of Non-Linear Skill Acquisition (2021-2025)](assets/venn.png)
+
 **Figure 2: Patterns of Non-Linear Skill Acquisition.** This diagram illustrates the three primary ways skills were acquired outside of a linear sequence. The project examples are representative of many others and are not exhaustive.
 
 #### 4.2.1 Just-in-Time Learning
@@ -134,6 +140,8 @@ A lot of my learning came from taking things apart. Instead of learning about an
 ### 4.3 Validation Without Grades: The "Validate" in Need–Build–Validate
 
 Without grades or exams, how did I know if I was actually learning anything? I found that validation came from the real world, not from a teacher. I identified four main ways I validated my skills:
+
+![Methods of Skill Validation](assets/horizontalbar.png)
 
 **Figure 3: Methods of Skill Validation.** This chart shows the primary ways in which skills were validated outside of a formal grading system. The examples are representative, not exhaustive.
 
@@ -165,6 +173,8 @@ When I put all these findings together, I saw a clear pattern: a recursive loop 
 2.  **Build**: I then learn the skill by building something. I use whatever resources I can find—documentation, AI tools, other people—to help me.
 3.  **Validate**: Finally, the thing I built provides validation. If it works, if people use it, and if other developers respect it, then I know I’ve learned the skill.
 
+![The Need–Build–Validate Learning Loop](assets/loop.png)
+
 **Figure 4: The Need–Build–Validate Learning Loop.** This diagram shows the continuous, cyclical nature of curriculum-independent learning. The examples shown are representative, not exhaustive.
 
 The key is that this isn't a one-time process. Every time I finish a project, it opens up new possibilities and new problems, which starts the loop all over again. This is how I’ve built up my skills over time, one loop at a time.
@@ -174,6 +184,8 @@ The key is that this isn't a one-time process. Every time I finish a project, it
 ### 4.5 AI-Assisted Learning: The 2025–2026 Context
 
 Something that’s really changed the game for me in the last couple of years is the rise of AI development tools. Tools like GitHub Copilot and Claude are now a part of my daily workflow, and they’ve had a huge impact on how I learn (Gkikas & Tsolis, 2025).
+
+![The Role of AI in the Learning Ecosystem](assets/schematic.png)
 
 **Figure 5: The Role of AI in the Learning Ecosystem.** This diagram shows how AI tools have been integrated into my learning process, acting as a co-pilot for everything from documentation to validation.
 
