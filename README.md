@@ -14,7 +14,7 @@ Formal education tells us that the best way to learn technical skills is through
 
 Curriculum-based education remains the dominant framework for teaching technical skills in schools and universities. These systems emphasize predefined learning outcomes, linear topic sequencing, and assessment through examinations or grades. While effective for standardized instruction, such models often fail to account for learners who acquire skills through real-world problem solving, project execution, and iterative failure outside formal classrooms.
 
-In recent years, the rise of accessible online documentation, open-source ecosystems, and AI-assisted learning tools has enabled students to bypass traditional instructional pathways entirely (Gkikas & Tsolis, 2025). Many student builders now learn programming, system design, and product development not because a syllabus requires it, but because a real problem demands it. Despite the visibility of this phenomenon, academic literature has largely focused on structured self-learning platforms (Chen, Xie, & Hwang, 2023) or maker education programs, rather than deeply examining independent, curriculum-free learning trajectories.
+In recent years, the rise of accessible online documentation, open-source ecosystems, and AI-assisted learning tools has enabled students to bypass traditional instructional pathways entirely. Many student builders now learn programming, system design, and product development not because a syllabus requires it, but because a real problem demands it. Despite the visibility of this phenomenon, academic literature has largely focused on structured self-learning platforms (Chen, Xie, & Hwang, 2023) or maker education programs, rather than deeply examining independent, curriculum-free learning trajectories.
 
 This paper addresses that gap by asking: **How do independent student builders construct and validate technical skills without a formal curriculum?** By grounding the analysis in lived experience rather than abstract theory, the study aims to make informal, real-world learning academically legible.
 
@@ -183,7 +183,7 @@ The key is that this isn't a one-time process. Every time I finish a project, it
 
 ### 4.5 AI-Assisted Learning: The 2025–2026 Context
 
-Something that’s really changed the game for me in the last couple of years is the rise of AI development tools. Tools like GitHub Copilot and Claude are now a part of my daily workflow, and they’ve had a huge impact on how I learn (Gkikas & Tsolis, 2025).
+Something that’s really changed the game for me in the last couple of years is the rise of AI development tools. Tools like GitHub Copilot and Claude are now a part of my daily workflow, and they’ve had a huge impact on how I learn.
 
 ![The Role of AI in the Learning Ecosystem](assets/schematic.png)
 
@@ -202,6 +202,17 @@ AI tools can also act as a sort of automated code reviewer. They can spot bugs, 
 #### 4.5.3 Responsible AI Usage: A New Skill
 
 I’ve had to learn how to use these AI tools effectively. It’s a skill in itself. I have to know how to write good prompts, how to critically evaluate the AI’s suggestions, and when to ignore it and trust my own judgment. It's a balancing act between using the AI to my advantage and not letting it become a crutch.
+
+#### 4.5.4 Risks and Failure Modes: Hallucinations, Dependency, and Cognitive Outsourcing
+
+Although AI tools can compress the time between a question and a plausible answer, they also introduce failure modes that are easy to miss during day-to-day building.
+
+1.  **Hallucinations and fabricated sources**: AI systems can generate confident explanations or references that are incorrect or do not exist. In an academic context, this becomes an epistemic risk: a single fabricated citation can undermine the credibility of an entire study. Practical mitigation requires verification habits (checking primary sources, running code, and treating AI output as a draft rather than evidence).
+2.  **Dependency and workflow fragility**: When AI becomes the default interface to documentation and debugging, skill development can become tool-dependent. If access changes (pricing, policy, outages) or model behavior shifts after updates, the learner’s workflow becomes less reproducible and less resilient.
+3.  **Shallow understanding and the illusion of competence**: AI can produce working solutions without requiring the learner to build an internal model of why they work. This can reduce transfer to new contexts and can mask gaps until a novel failure occurs.
+4.  **Cognitive outsourcing and skill atrophy**: Offloading planning, recall, and explanation to AI can weaken core practices that support expertise, such as deliberate practice, self-explanation, and reflective debugging. Used as a scaffold, AI can help; used as a substitute, it can erode independent problem solving.
+
+These risks do not eliminate AI’s usefulness, but they imply that “AI-assisted learning” should be treated as a bounded technique with explicit guardrails, not as an unqualified acceleration of learning.
 
 ---
 
@@ -269,7 +280,13 @@ Chen, X., Xie, H., & Hwang, G. J. (2023). A systematic review of AI-driven perso
 
 Gallagher, S. (2022). *The Future of University Credentials: New Developments at the Intersection of Higher Education and Work*. Harvard Education Press.
 
-Gkikas, A., & Tsolis, D. (2025). AI-Assisted Co-Creation of Educational Content: A Case Study. *Journal of Learning Analytics*, 12(1), 1-17.
+Lave, J., & Wenger, E. (1991). *Situated learning: Legitimate peripheral participation*. Cambridge University Press.
+
+Papert, S. (1980). *Mindstorms: Children, computers, and powerful ideas*. Basic Books.
+
+Raymond, E. S. (1999). *The cathedral and the bazaar: Musings on Linux and open source by an accidental revolutionary*. O'Reilly Media.
+
+Resnick, M. (2017). *Lifelong kindergarten: Cultivating creativity through projects, passion, peers, and play*. MIT Press.
 
 Hmelo-Silver, C. E. (2004). Problem-based learning: What and how do students learn? *Educational Psychology Review*, 16(3), 235-266.
 
@@ -279,8 +296,10 @@ Knowles, M. S. (1975). *Self-directed learning: A guide for learners and teacher
 
 Lam, R. (2021). Portfolio assessment for the learning and assessment of disciplinary knowledge and skills. *Assessment & Evaluation in Higher Education*, 46(7), 1013-1026.
 
+Ericsson, K. A., Krampe, R. T., & Tesch-Römer, C. (1993). The role of deliberate practice in the acquisition of expert performance. *Psychological Review*, 100(3), 363-406.
+
+Bender, E. M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2021). On the dangers of stochastic parrots: Can language models be too big? In *Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency* (pp. 610-623).
+
 Schmidt, H. G., & Moust, J. H. (1995). What makes a tutor effective? *Academic Medicine*, 70(4), 290-294.
 
 Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. *Theory Into Practice*, 41(2), 64-70.
-
----
