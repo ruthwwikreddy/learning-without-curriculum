@@ -40,7 +40,7 @@ However, most existing studies examine learning within semi-structured environme
 
 To understand how complex skills are learned outside of school, I used an auto-ethnographic case study approach. This just means I studied my own experiences as a student builder. It's a research method where my personal journey is the main source of data, which I then analyze with other materials and ideas. I chose this because it’s great for exploring new areas where the researcher (me) is deeply involved and has insider knowledge.
 
-The study covers my projects and learning from 2021 to 2025. Because I am both the researcher and the subject, I have a direct line into my own motivations, thoughts, and the real-time experience of learning without a syllabus.
+My study covers my projects and learning from 2021 to 2025. Since I'm both the researcher and the subject, I have direct access to my own motivations, thoughts, and what it was really like to learn without a syllabus.
 
 ### 3.2 Data Sources
 
@@ -52,7 +52,7 @@ My data comes from a few key places:
 4.  **Reconstructed Skill Timelines**: A map connecting the problems I faced to the skills I had to learn to solve them.
 5.  **Community Interactions**: My contributions to open-source projects, feedback from other developers on my code, and discussions on platforms like GitHub.
 
-Instead of using grades or certificates to measure learning, I looked at whether my projects actually worked and were used by others. This feels more true to how builders like me actually prove their skills.
+Instead of using grades or certificates to measure learning, I looked at whether my projects actually worked and were used by others. This feels more true to how builders like me actually prove our skills.
 
 
 ![Learning Milestones of an Independent Student Builder (2021-2025)](assets/timeline.png)
@@ -60,7 +60,7 @@ Instead of using grades or certificates to measure learning, I looked at whether
 
 ### 3.3 Data Analysis
 
-To make sense of the data, I manually coded my experiences using a framework I developed. This was a thematic analysis where I looked for recurring patterns across all my projects and notes. The main coding dimensions were:
+To make sense of the data, I manually coded my experiences using a framework I developed. This was basically a thematic analysis where I looked for recurring patterns across all my projects and notes. The main coding dimensions were:
 
 - **Trigger Mechanism**: What kicked off the learning? (e.g., a problem, a deadline, a failure, an experiment, or something from the community).
 - **Learning Mode**: How did I learn it? (e.g., reading docs, reverse-engineering code, trial-and-error, learning with a friend, or using AI).
@@ -77,7 +77,7 @@ Doing auto-ethnography means I have to be aware of my own biases. Since I'm the 
 
 ## 4. Findings
 
-My findings show that learning without a curriculum isn’t random. Instead, it’s a structured process that revolves around the "Need–Build–Validate" loop. Skills are acquired when there's a real need, they're built through hands-on projects, and they're validated by whether the project actually works.
+My findings show that learning without a curriculum isn't random at all. Instead, it follows a structured process that revolves around the "Need–Build–Validate" loop. Skills are learned when there's a real need, they're built through hands-on projects, and they're validated by whether the project actually works.
 
 ### 4.1 Skill Acquisition Triggers: The "Need" in Need–Build–Validate
 
@@ -85,9 +85,7 @@ I found that my learning was always kicked off by a specific, identifiable need.
 
 ![Breakdown of Learning Triggers (2021-2025)](assets/piechart.png)
 
-**Figure 1: Breakdown of Learning Triggers (2021-2025).** This chart shows the distribution of the five primary triggers that initiated learning episodes. "Problem-Driven" is the most common, highlighting the importance of authentic challenges. The examples provided are representative, not exhaustive.
-
-**Figure 1: Breakdown of Learning Triggers (2021-2025).** This chart shows the distribution of the five primary triggers that initiated learning episodes. "Problem-Driven" is the most common, highlighting the importance of authentic challenges. The examples provided are representative, not exhaustive.
+**Figure 1: Breakdown of Learning Triggers (2021-2025).** This chart shows the distribution of the five primary triggers that initiated learning episodes. "Problem-Driven" is the most common, highlighting the importance of authentic challenges.
 
 #### 4.1.1 Problem-Driven Triggers
 
@@ -99,7 +97,7 @@ Deadlines were a huge motivator. Competitions, project due dates, or even just a
 
 #### 4.1.3 Failure-Driven Triggers
 
-A lot of my deepest learning came from things going wrong. When my code broke or a system failed, I had to dig deep to understand why. Fixing a bug taught me more than reading documentation ever could. For example, a security issue in one of my projects forced me to learn all about authentication, and a database crash taught me a ton about optimization.
+A lot of my deepest learning came from things going wrong. When my code broke or a system failed, I had to dig deep to understand why. Fixing a bug taught me more than reading documentation ever could. For example, a Cross-Site Scripting (XSS) vulnerability in one of my React applications forced me to learn all about JWT tokens and CORS policies, and a PostgreSQL deadlock taught me a ton about transaction isolation levels and query optimization. Another time, my Docker containers kept crashing due to memory limits, which led me to learn about resource management and container orchestration with Kubernetes.
 
 #### 4.1.4 Experimentation-Driven Triggers
 
@@ -107,9 +105,9 @@ Sometimes, I’d just play around with a new technology out of curiosity. This w
 
 #### 4.1.5 Community-Driven Triggers
 
-I also learned a lot from other people. Seeing how other developers solved problems, reading high-quality open-source code, and getting feedback on my own work were all major learning triggers. The standards of the community became my own learning goals.
+I also learned a lot from other people. Seeing how other developers solved problems, reading high-quality open-source code, and getting feedback on my own work were all major learning triggers. The standards of the community became learning goals.
 
-**Key Finding**: The big takeaway here is that none of these triggers are what you’d find in a typical classroom. They are all **situated, authentic, and self-identified**, which research suggests leads to much deeper and more lasting learning.
+**Key Finding**: The big takeaway is that none of these triggers are what you’d find in a typical classroom. They are all **situated, authentic, and self-identified**, which research suggests leads to much deeper and more lasting learning.
 
 ---
 
@@ -119,7 +117,7 @@ In school, you learn things in a straight line: start with the basics and move t
 
 ![Patterns of Non-Linear Skill Acquisition (2021-2025)](assets/venn.png)
 
-**Figure 2: Patterns of Non-Linear Skill Acquisition.** This diagram illustrates the three primary ways skills were acquired outside of a linear sequence. The project examples are representative of many others and are not exhaustive.
+**Figure 2: Patterns of Non-Linear Skill Acquisition.** This diagram illustrates the three primary ways skills were acquired outside of a linear sequence.
 
 #### 4.2.1 Just-in-Time Learning
 
@@ -143,7 +141,7 @@ Without grades or exams, how did I know if I was actually learning anything? I f
 
 ![Methods of Skill Validation](assets/horizontalbar.png)
 
-**Figure 3: Methods of Skill Validation.** This chart shows the primary ways in which skills were validated outside of a formal grading system. The examples are representative, not exhaustive.
+**Figure 3: Methods of Skill Validation.** This chart shows the primary ways in which skills were validated outside of a formal grading system.
 
 #### 4.3.1 Functional Outcomes as Proof
 
@@ -175,7 +173,7 @@ When I put all these findings together, I saw a clear pattern: a recursive loop 
 
 ![The Need–Build–Validate Learning Loop](assets/loop.png)
 
-**Figure 4: The Need–Build–Validate Learning Loop.** This diagram shows the continuous, cyclical nature of curriculum-independent learning. The examples shown are representative, not exhaustive.
+**Figure 4: The Need–Build–Validate Learning Loop.** This diagram shows the continuous, cyclical nature of curriculum-independent learning.
 
 The key is that this isn't a one-time process. Every time I finish a project, it opens up new possibilities and new problems, which starts the loop all over again. This is how I’ve built up my skills over time, one loop at a time.
 
@@ -183,7 +181,7 @@ The key is that this isn't a one-time process. Every time I finish a project, it
 
 ### 4.5 AI-Assisted Learning: The 2025–2026 Context
 
-Something that’s really changed the game for me in the last couple of years is the rise of AI development tools. Tools like GitHub Copilot and Claude are now a part of my daily workflow, and they’ve had a huge impact on how I learn.
+Something that’s really changed the game for me in the last couple of years is the rise of AI development tools. Tools like ChatGPT, Gemini and Claude are now a part of my daily workflow, and they’ve had a huge impact on how I learn.
 
 ![The Role of AI in the Learning Ecosystem](assets/schematic.png)
 
@@ -191,7 +189,7 @@ Something that’s really changed the game for me in the last couple of years is
 
 #### 4.5.1 Documentation Acceleration
 
-AI tools are amazing at summarizing documentation, generating code, and explaining things I don’t understand. This has dramatically sped up my learning process. Instead of spending hours searching for answers, I can just ask an AI.
+AI tools are amazing at summarizing documentation, generating code, and explaining things I don't understand. This has dramatically sped up my learning process. Instead of spending hours searching for answers, I can just ask an AI. For example, when I was stuck understanding Redux middleware, I asked Gemini to explain it with a practical analogy, and when I encountered a cryptic TypeScript error, Claude helped me break down the type system issue step by step. ChatGPT has been great for generating boilerplate code when I'm starting a new project with Express.js or Next.js.
 
 **Critical Limitation**: But there’s a catch. Recent studies have shown that while AI feels faster, it can actually slow down experienced developers on complex tasks. It's a paradox: the perception of speed doesn't always match reality. I have to be careful not to rely on it too much and let my own problem-solving skills get rusty.
 

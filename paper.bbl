@@ -1,0 +1,94 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bender et~al.(2021)Bender, Gebru, McMillan-Major, and
+  Shmitchell]{bender2021}
+Emily~M. Bender, Timnit Gebru, Angelina McMillan-Major, and Shmargaret
+  Shmitchell.
+\newblock On the dangers of stochastic parrots: Can language models be too big?
+\newblock In \emph{Proceedings of the 2021 ACM Conference on Fairness,
+  Accountability, and Transparency}, pages 610--623, 2021.
+
+\bibitem[Chen et~al.(2023)Chen, Xie, and Hwang]{chen2023}
+X.~Chen, H.~Xie, and G.-J. Hwang.
+\newblock A systematic review of ai-driven personalized learning from 2011 to
+  2021.
+\newblock \emph{Journal of Educational Technology \& Society}, 26\penalty0
+  (1):\penalty0 1--19, 2023.
+
+\bibitem[Ericsson et~al.(1993)Ericsson, Krampe, and
+  Tesch-R{"o}mer]{ericsson1993}
+K.~Anders Ericsson, Ralf~T. Krampe, and Clemens Tesch-R{"o}mer.
+\newblock The role of deliberate practice in the acquisition of expert
+  performance.
+\newblock \emph{Psychological Review}, 100\penalty0 (3):\penalty0 363--406,
+  1993.
+
+\bibitem[Gallagher(2022)]{gallagher2022}
+Sean Gallagher.
+\newblock \emph{The Future of University Credentials: New Developments at the
+  Intersection of Higher Education and Work}.
+\newblock Harvard Education Press, 2022.
+
+\bibitem[Hmelo-Silver(2004)]{hmelo2004}
+Cindy~E. Hmelo-Silver.
+\newblock Problem-based learning: What and how do students learn?
+\newblock \emph{Educational Psychology Review}, 16\penalty0 (3):\penalty0
+  235--266, 2004.
+
+\bibitem[Ito et~al.(2013)Ito, Soep, Guti{\'e}rrez, Livingstone, Boyd, and
+  Pascoe]{ito2013}
+Mizuko Ito, Elisabeth Soep, Kris~D. Guti{\'e}rrez, Sonia Livingstone, danah
+  Boyd, and C.~J. Pascoe.
+\newblock Connected learning: An agenda for research and design.
+\newblock Technical report, Digital Media and Learning Research Hub, 2013.
+
+\bibitem[Knowles(1975)]{knowles1975}
+Malcolm~S. Knowles.
+\newblock \emph{Self-Directed Learning: A Guide for Learners and Teachers}.
+\newblock Cambridge Books, 1975.
+
+\bibitem[Lam(2021)]{lam2021}
+Ricky Lam.
+\newblock Portfolio assessment for the learning and assessment of disciplinary
+  knowledge and skills.
+\newblock \emph{Assessment \& Evaluation in Higher Education}, 46\penalty0
+  (7):\penalty0 1013--1026, 2021.
+
+\bibitem[Lave and Wenger(1991)]{lave1991}
+Jean Lave and Etienne Wenger.
+\newblock \emph{Situated Learning: Legitimate Peripheral Participation}.
+\newblock Cambridge University Press, 1991.
+
+\bibitem[Papert(1980)]{papert1980}
+Seymour Papert.
+\newblock \emph{Mindstorms: Children, Computers, and Powerful Ideas}.
+\newblock Basic Books, 1980.
+
+\bibitem[Raymond(1999)]{raymond1999}
+Eric~S. Raymond.
+\newblock \emph{The Cathedral and the Bazaar: Musings on Linux and Open Source
+  by an Accidental Revolutionary}.
+\newblock O'Reilly Media, 1999.
+
+\bibitem[Resnick(2017)]{resnick2017}
+Mitchel Resnick.
+\newblock \emph{Lifelong Kindergarten: Cultivating Creativity through Projects,
+  Passion, Peers, and Play}.
+\newblock MIT Press, 2017.
+
+\bibitem[Schmidt and Moust(1995)]{schmidt1995}
+Henk~G. Schmidt and Jos H.~C. Moust.
+\newblock What makes a tutor effective?
+\newblock \emph{Academic Medicine}, 70\penalty0 (4):\penalty0 290--294, 1995.
+
+\bibitem[Zimmerman(2002)]{zimmerman2002}
+Barry~J. Zimmerman.
+\newblock Becoming a self-regulated learner: An overview.
+\newblock \emph{Theory Into Practice}, 41\penalty0 (2):\penalty0 64--70, 2002.
+
+\end{thebibliography}
