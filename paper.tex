@@ -195,19 +195,15 @@ Social standards and peer expectations also functioned as learning catalysts. Ob
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[x=1cm,y=1cm,font=\small\sffamily]
-  \def\R{2.2}
-  \def\r{1.1} 
+  \def\R{2.0} % Reduced slightly from 2.2
+  \def\r{1.0} 
   \def\cx{0}
   \def\cy{0}
   \tikzset{slice/.style={draw=white, line width=1.5pt, drop shadow={opacity=0.3}}}
   
-  % Full segments (40/20/15/15/10) -> angles (144/72/54/54/36)
-  % Angles: 0-144, 144-216, 216-270, 270-324, 324-360
-  
-  % Exploded callout for Problem-Driven
   \begin{scope}[shift={(72:0.3)}]
     \path[slice, top color=GoldHighlight, bottom color=GoldHighlight!60] (\cx,\cy) -- (0:\R) arc (0:144:\R) -- cycle;
-    \node[color=white, font=\bfseries] at (72:\R*0.7) {40\%};
+    \node[color=white, font=\bfseries] at (72:\R*0.65) {40\%};
   \end{scope}
 
   \path[slice, top color=Charcoal!80, bottom color=Charcoal] (\cx,\cy) -- (144:\R) arc (144:216:\R) -- cycle;
@@ -215,14 +211,13 @@ Social standards and peer expectations also functioned as learning catalysts. Ob
   \path[slice, top color=Charcoal!40, bottom color=Charcoal!60] (\cx,\cy) -- (270:\R) arc (270:324:\R) -- cycle;
   \path[slice, top color=Charcoal!20, bottom color=Charcoal!40] (\cx,\cy) -- (324:\R) arc (324:360:\R) -- cycle;
   
-  % Center cover
   \fill[white] (\cx,\cy) circle (\r);
   \draw[Charcoal!10, line width=1pt] (\cx,\cy) circle (\r);
   \node[font=\bfseries\Charcoal, align=center] at (\cx,\cy) {PRIMARY\\TRIGGERS};
 
-  % Legend with better spacing
-  \def\lx{3.5} \def\ly{1.0} \def\sw{0.4} \def\sh{0.3}
-  \foreach \color/\label/\dy in {GoldHighlight/Problem-Driven/0, Charcoal!80/Deadline-Driven/0.7, Charcoal!60/Failure-Driven/1.4, Charcoal!40/Experimentation/2.1, Charcoal!20/Community-Driven/2.8} {
+  % Legend with more padding
+  \def\lx{3.2} \def\ly{0.8} \def\sw{0.4} \def\sh{0.3}
+  \foreach \color/\label/\dy in {GoldHighlight/Problem-Driven/0, Charcoal!80/Deadline-Driven/0.7, Charcoal!60/Failure-Driven/1.4, Charcoal!40/Experimentation/2.1, Charcoal!20/Community/2.8} {
     \fill[\color, drop shadow={opacity=0.1}] (\lx, \ly-\dy) rectangle (\lx+\sw, \ly-\dy+\sh);
     \node[anchor=west, font=\footnotesize\bfseries\Charcoal] at (\lx+0.5, \ly-\dy+0.15) {\label};
   }
@@ -350,51 +345,46 @@ When I put all these findings together, I saw a clear pattern: a recursive loop 
 \ifhasticz
 \makebox[\textwidth][c]{\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[x=1.3cm,y=1.3cm,>=Stealth]
-  % Ultimate 3D/Elite Loop Design
-  \tikzset{loopnode/.style={circle, draw=Charcoal, line width=3pt, minimum size=3.8cm, align=center, fill=white, font=\LARGE\bfseries\Charcoal, drop shadow={shadow xshift=4pt, shadow yshift=-4pt, opacity=0.3}}}
+  % Professional Loop Design - Space Optimized
+  \tikzset{loopnode/.style={circle, draw=Charcoal, line width=2.5pt, minimum size=3.4cm, align=center, fill=white, font=\Large\bfseries\Charcoal, drop shadow={shadow xshift=3pt, shadow yshift=-3pt}}}
   
-  \node[loopnode, draw=GoldHighlight] (need) at (90:4.0) {NEED};
-  \node[loopnode] (build) at (210:4.0) {BUILD};
-  \node[loopnode] (validate) at (330:4.0) {VALIDATE};
+  % Increased circle radius to prevent overlap
+  \node[loopnode, draw=GoldHighlight] (need) at (90:4.6) {NEED};
+  \node[loopnode] (build) at (210:4.6) {BUILD};
+  \node[loopnode] (validate) at (330:4.6) {VALIDATE};
 
-  % Detailed Icons
-  % Lightbulb with "Glow"
-  \begin{scope}[shift={(need.south)}, yshift=0.8cm, scale=0.7]
-    \fill[GoldHighlight!20, even odd rule] (0,0.4) circle (0.6); % Glow
-    \draw[GoldHighlight, line width=2pt] (0,0.4) circle (0.3);
-    \draw[GoldHighlight, line width=2pt] (-0.15,0.1) -- (0.15,0.1);
-    \draw[GoldHighlight, line width=2pt] (-0.15,0.0) -- (0.15,0.0);
-    \foreach \a in {0,45,90,135,180,225,270,315} \draw[GoldHighlight, line width=1pt] (0,0.4) +(\a:0.4) -- +(\a:0.6);
+  % detailed icons - repositioned
+  \begin{scope}[shift={(need.south)}, yshift=0.9cm, scale=0.6]
+    \fill[GoldHighlight!15] (0,0.4) circle (0.5);
+    \draw[GoldHighlight, line width=1.5pt] (0,0.4) circle (0.3);
+    \draw[GoldHighlight, line width=1.5pt] (-0.1,0.1) -- (0.1,0.1);
   \end{scope}
   
-  % Hammer
-  \begin{scope}[shift={(build.south)}, yshift=0.8cm, scale=0.7, rotate=-45]
-    \fill[Charcoal!80] (-0.08,0) rectangle (0.08,0.7); % Handle
-    \fill[Charcoal] (-0.3,0.6) rectangle (0.3,0.9); % Head
-    \draw[Charcoal, line width=1pt] (-0.3,0.6) rectangle (0.3,0.9);
+  \begin{scope}[shift={(build.south)}, yshift=0.9cm, scale=0.6, rotate=-45]
+    \fill[Charcoal!80] (-0.08,0) rectangle (0.08,0.7);
+    \fill[Charcoal] (-0.25,0.6) rectangle (0.25,0.85);
   \end{scope}
 
-  % Checkmark (Stylized Shield/Check)
-  \begin{scope}[shift={(validate.south)}, yshift=0.8cm, scale=0.7]
-    \draw[SteelBlue, line width=3pt, line cap=round] (-0.3,0.2) -- (-0.05,-0.1) -- (0.4,0.5);
+  \begin{scope}[shift={(validate.south)}, yshift=0.9cm, scale=0.6]
+    \draw[SteelBlue, line width=2.5pt] (-0.2,0.2) -- (0,0) -- (0.3,0.4);
   \end{scope}
 
-  % 3D-style Curved Arrows
-  \tikzset{flowarrow/.style={->, line width=6pt, draw=Charcoal!90, double=white, double distance=2pt}}
+  % 3D-style Curved Arrows - labels shifted to prevent overlap
+  \tikzset{flowarrow/.style={->, line width=5pt, draw=Charcoal!90, double=white, double distance=1.5pt}}
   
-  \draw[flowarrow] (need) to[bend right=40] node[midway, left=18pt, font=\bfseries\sffamily\SlateGrey, rotate=60] {Problem Emergence} (build);
-  \draw[flowarrow] (build) to[bend right=40] node[midway, below=18pt, font=\bfseries\sffamily\SlateGrey] {System Implementation} (validate);
-  \draw[flowarrow] (validate) to[bend right=40] node[midway, right=18pt, font=\bfseries\sffamily\SlateGrey, rotate=-60] {Functional Feedback} (need);
+  \draw[flowarrow] (need) to[bend right=40] node[midway, left=25pt, font=\bfseries\sffamily\SlateGrey, rotate=60] {Problem Emergence} (build);
+  \draw[flowarrow] (build) to[bend right=40] node[midway, below=25pt, font=\bfseries\sffamily\SlateGrey] {System Implementation} (validate);
+  \draw[flowarrow] (validate) to[bend right=40] node[midway, right=25pt, font=\bfseries\sffamily\SlateGrey, rotate=-60] {Functional Feedback} (need);
 
-  % Central Graphic Deep Shadow
-  \draw[Charcoal!10, line width=18pt] (0,0) circle (2.4cm);
-  \node[font=\huge\bfseries\Charcoal] at (0,0.3) {CORE};
-  \node[font=\Large\bfseries\GoldHighlight] at (0,-0.4) {LOOP};
+  % Central Graphic - smaller to provide room
+  \draw[Charcoal!10, line width=12pt] (0,0) circle (2.0cm);
+  \node[font=\huge\bfseries\Charcoal] at (0,0.2) {CORE};
+  \node[font=\Large\bfseries\GoldHighlight] at (0,-0.6) {PROCESS};
 
   % Details
-  \node[font=\footnotesize\bfseries\GoldHighlight, align=center] at (90:2.5) {Technical\\Impetus};
-  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (210:2.5) {Skill\\Synthesis};
-  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (330:2.5) {Objective\\Verification};
+  \node[font=\footnotesize\bfseries\GoldHighlight] at (90:2.9) {Trigger};
+  \node[font=\footnotesize\bfseries\Charcoal] at (210:2.9) {Execution};
+  \node[font=\footnotesize\bfseries\Charcoal] at (330:2.9) {Feedback};
 \end{tikzpicture}%
 }}%
 \else
