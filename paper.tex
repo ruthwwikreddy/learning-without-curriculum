@@ -14,15 +14,14 @@
 \usepackage{caption}
 \usepackage{float}
 \newif\ifhasticz
+\IfFileExists{tikz.sty}{
+  \hasticztrue
+  \usepackage{tikz}
+  \usetikzlibrary{arrows.meta,calc,positioning}
+}{
+  \hasticzfalse
+}
 \IfFileExists{balance.sty}{\usepackage{balance}}{}
-
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric,shadows,shadings,decorations.text,fadings}
-\definecolor{Charcoal}{RGB}{40,40,40}
-\definecolor{GoldHighlight}{RGB}{218,165,32}
-\definecolor{SlateGrey}{RGB}{70,90,110}
-\definecolor{SteelBlue}{RGB}{70,130,180}
-\hasticztrue
 
 \geometry{margin=1in}
 
@@ -116,30 +115,17 @@ In this study, success is defined by \textit{how well the project works} and \te
 \begin{figure}[t]
 \centering
 \ifhasticz
-\makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm, node distance=1.5cm]
-  % Professional Timeline Style
-  \draw[line width=3pt, SlateGrey, -{Stealth[length=3mm]}] (0,0) -- (10.5,0);
-  
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[thick] (0,0) -- (10,0);
   \foreach \x/\y in {0/2021,2.5/2022,5/2023,7.5/2024,10/2025} {
-    \draw[SlateGrey, line width=1.5pt] (\x,0.15) -- (\x,-0.15);
-    \node[anchor=north, font=\small\bfseries, SlateGrey] at (\x,-0.25) {\y};
+    \draw[thick] (\x,0) -- (\x,0.25);
+    \node[anchor=north] at (\x,-0.15) {\y};
   }
-
-  \tikzset{milestone/.style={circle, fill=SteelBlue!20, draw=SteelBlue, thick, inner sep=3pt, drop shadow={opacity=0.2}, font=\small\bfseries}}
-  
-  \node[milestone] (m1) at (0.5, 1.2) {Foundations};
-  \node[milestone] (m2) at (3, -1.2) {Projects};
-  \node[milestone] (m3) at (5.5, 1.2) {Open Source};
-  \node[milestone] (m4) at (8.2, -1.2) {Systems};
-  \node[milestone] (m5) at (10, 1.2) {Research};
-
-  \foreach \m in {m1,m3,m5} \draw[SteelBlue, dashed, line width=1pt] (\m.south) -- (\m |- 0,0);
-  \foreach \m in {m2,m4} \draw[SteelBlue, dashed, line width=1pt] (\m.north) -- (\m |- 0,0);
-  
-  \foreach \x in {0.5,3,5.5,8.2,10} \fill[SteelBlue] (\x,0) circle (3pt);
-\end{tikzpicture}%
-}}%
+  \foreach \x/\label in {0.5/Foundations,3/Projects,5.8/Open\ Source,8.2/Systems,9.6/Research} {
+    \fill (\x,0) circle (2.2pt);
+    \node[align=center,anchor=south,font=\small] at (\x,0.35) {\label};
+  }
+\end{tikzpicture}
 \else
 \fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
 \fi
@@ -193,48 +179,58 @@ Social standards and peer expectations also functioned as learning catalysts. Ob
 \begin{figure}[t]
 \centering
 \ifhasticz
-\makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,font=\small\sffamily]
-  \def\R{2.2}
-  \def\r{1.1} 
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+  \def\R{1.55}
   \def\cx{0}
   \def\cy{0}
-  \tikzset{slice/.style={draw=white, line width=1.5pt, drop shadow={opacity=0.3}}}
-  
-  % Full segments (40/20/15/15/10) -> angles (144/72/54/54/36)
-  % Angles: 0-144, 144-216, 216-270, 270-324, 324-360
-  
-  % Exploded callout for Problem-Driven
-  \begin{scope}[shift={(72:0.3)}]
-    \path[slice, top color=GoldHighlight, bottom color=GoldHighlight!60] (\cx,\cy) -- (0:\R) arc (0:144:\R) -- cycle;
-    \node[color=white, font=\bfseries] at (72:\R*0.7) {40\%};
-  \end{scope}
+  \tikzset{slice/.style={draw=black,thin}}
+  \tikzset{leg/.style={anchor=west,font=\small}}
 
-  \path[slice, top color=Charcoal!80, bottom color=Charcoal] (\cx,\cy) -- (144:\R) arc (144:216:\R) -- cycle;
-  \path[slice, top color=Charcoal!60, bottom color=Charcoal!80] (\cx,\cy) -- (216:\R) arc (216:270:\R) -- cycle;
-  \path[slice, top color=Charcoal!40, bottom color=Charcoal!60] (\cx,\cy) -- (270:\R) arc (270:324:\R) -- cycle;
-  \path[slice, top color=Charcoal!20, bottom color=Charcoal!40] (\cx,\cy) -- (324:\R) arc (324:360:\R) -- cycle;
-  
-  % Center cover
-  \fill[white] (\cx,\cy) circle (\r);
-  \draw[Charcoal!10, line width=1pt] (\cx,\cy) circle (\r);
-  \node[font=\bfseries\Charcoal, align=center] at (\cx,\cy) {PRIMARY\\TRIGGERS};
+  \def\aA{0}
+  \def\aB{144}
+  \def\aC{216}
+  \def\aD{270}
+  \def\aE{324}
+  \def\aF{360}
 
-  % Legend with generous spacing to prevent overlap
-  \def\lx{3.8} \def\ly{1.0} \def\sw{0.4} \def\sh{0.3}
-  \foreach \color/\label/\dy in {GoldHighlight/Problem-Driven/0, Charcoal!80/Deadline-Driven/0.7, Charcoal!60/Failure-Driven/1.4, Charcoal!40/Experimentation/2.1, Charcoal!20/Community-Driven/2.8} {
-    \fill[\color, drop shadow={opacity=0.1}] (\lx, \ly-\dy) rectangle (\lx+\sw, \ly-\dy+\sh);
-    \node[anchor=west, font=\footnotesize\bfseries\Charcoal] at (\lx+0.5, \ly-\dy+0.15) {\label};
-  }
-\end{tikzpicture}%
-}}%
+  \path[slice,fill=black!60] (\cx,\cy) -- (\aA:\R) arc (\aA:\aB:\R) -- cycle;
+  \path[slice,fill=black!40] (\cx,\cy) -- (\aB:\R) arc (\aB:\aC:\R) -- cycle;
+  \path[slice,fill=black!20] (\cx,\cy) -- (\aC:\R) arc (\aC:\aD:\R) -- cycle;
+  \path[slice,fill=black!10] (\cx,\cy) -- (\aD:\R) arc (\aD:\aE:\R) -- cycle;
+  \path[slice,fill=white]     (\cx,\cy) -- (\aE:\R) arc (\aE:\aF:\R) -- cycle;
+  \draw[slice] (\cx,\cy) circle (\R);
+
+  \def\lx{2.25}
+  \def\ly{1.10}
+  \def\sw{0.28}
+  \def\sh{0.22}
+  \fill[black!60] (\lx,\ly) rectangle (\lx+\sw, \ly+\sh);
+  \draw[black,thin] (\lx,\ly) rectangle (\lx+\sw, \ly+\sh);
+  \node[leg] at (\lx+0.40, \ly+0.11) {Problem-Driven (40\%)};
+
+  \fill[black!40] (\lx,\ly-0.55) rectangle (\lx+\sw, \ly-0.55+\sh);
+  \draw[black,thin] (\lx,\ly-0.55) rectangle (\lx+\sw, \ly-0.55+\sh);
+  \node[leg] at (\lx+0.40, \ly-0.55+0.11) {Deadline-Driven (20\%)};
+
+  \fill[black!20] (\lx,\ly-1.10) rectangle (\lx+\sw, \ly-1.10+\sh);
+  \draw[black,thin] (\lx,\ly-1.10) rectangle (\lx+\sw, \ly-1.10+\sh);
+  \node[leg] at (\lx+0.40, \ly-1.10+0.11) {Failure-Driven (15\%)};
+
+  \fill[black!10] (\lx,\ly-1.65) rectangle (\lx+\sw, \ly-1.65+\sh);
+  \draw[black,thin] (\lx,\ly-1.65) rectangle (\lx+\sw, \ly-1.65+\sh);
+  \node[leg] at (\lx+0.40, \ly-1.65+0.11) {Experimentation (15\%)};
+
+  \fill[white] (\lx,\ly-2.20) rectangle (\lx+\sw, \ly-2.20+\sh);
+  \draw[black,thin] (\lx,\ly-2.20) rectangle (\lx+\sw, \ly-2.20+\sh);
+  \node[leg] at (\lx+0.40, \ly-2.20+0.11) {Community (10\%)};
+\end{tikzpicture}
 \else
 \fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
 \fi
 \caption{Breakdown of Learning Triggers (2021--2025). ``Problem-Driven'' is the most common, highlighting the importance of authentic challenges.}
 \end{figure}
 
-\subsection{\textcolor{GoldHighlight}{Non-Linear Skill Learning: Moving Beyond the Step-by-Step Syllabus}}
+\subsection{Non-Linear Skill Learning: Moving Beyond the Step-by-Step Syllabus}
 
 As expected, learning without a curriculum does not follow a simple, step-by-step order. Instead, it shows up as a "messy," non-linear path consisting of three primary patterns.
 
@@ -254,18 +250,16 @@ A large part of learning came from deconstructing existing systems. Rather than 
 \centering
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,font=\small]
-  \tikzset{process/.style={rectangle, draw=SteelBlue, thick, fill=white, rounded corners=0.2cm, inner sep=8pt, text width=3cm, align=center, drop shadow}}
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\small]
+  \tikzset{nodebox/.style={draw,black!70,thick,rounded corners,fill=black!8,align=center,minimum width=4.2cm,minimum height=1.05cm}}
 
-  \node[process] (jit) at (0,0) {\textbf{Just-in-Time}\\Learning};
-  \node[process] (cms) at (5,0) {\textbf{Concurrent}\\Multi-Skill};
-  \node[process] (re)  at (2.5,-2.2) {\textbf{Reverse\\Engineering}};
+  \node[nodebox] (jit) at (0,0) {Just-in-Time\\Learning};
+  \node[nodebox] (cms) at (5.2,0) {Concurrent\\Multi-Skill};
+  \node[nodebox] (re)  at (2.6,-2.0) {Reverse-\\Engineering};
 
-  \draw[->, thick, SteelBlue] (jit) -- (cms);
-  \draw[->, thick, SteelBlue] (cms) -- (re);
-  \draw[->, thick, SteelBlue] (re) -- (jit);
-  
-  \node[font=\itshape\SlateGrey, anchor=center] at (2.5,-0.6) {Recursive Flow};
+  \draw[->,black!70,thick] (jit) -- (cms);
+  \draw[->,black!70,thick] (cms) -- (re);
+  \draw[->,black!70,thick] (re) -- (jit);
 \end{tikzpicture}%
 }}%
 \else
@@ -301,13 +295,11 @@ Maintaining a public profile (e.g., GitHub) acts as a dynamic credential. Unlike
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[x=1cm,y=1cm]
-  \def\w{6.5}
-  \tikzset{bar/.style={line width=0.8pt, fill=SteelBlue, top color=SteelBlue!80, bottom color=SteelBlue, drop shadow={opacity=0.1}}}
-  \foreach \y/\label/\val in {0.0/Functional Outcomes/0.85, -0.9/User Feedback/0.65, -1.8/Peer Review/0.50, -2.7/Public Portfolio/0.75} {
-    \node[anchor=east, font=\small\bfseries\SlateGrey] at (0,\y) {\label};
-    \fill[bar] (0.2, \y-0.25) rectangle ({0.2+\w*\val}, \y+0.25);
-    \draw[SlateGrey!30] (0.2, \y-0.25) rectangle ({0.2+\w}, \y+0.25);
-    \node[anchor=west, font=\footnotesize\itshape, blue!60!black] at ({0.2+\w*\val}, \y) {\pgfmathparse{int(\val*100)}\pgfmathresult\%};
+  \def\w{6.8}
+  \foreach \y/\label/\val in {0.0/Functional Outcomes/0.80, -0.8/User Feedback/0.65, -1.6/Peer Review/0.55, -2.4/Portfolio/0.70} {
+    \node[anchor=east,font=\small] at (0,\y) {\label};
+    \fill[gray!35] (0.2,\y-0.18) rectangle ({0.2+\w*\val},\y+0.18);
+    \draw[thick] (0.2,\y-0.18) rectangle ({0.2+\w}, \y+0.18);
   }
 \end{tikzpicture}%
 }}%
@@ -349,48 +341,13 @@ When I put all these findings together, I saw a clear pattern: a recursive loop 
 \centering
 \ifhasticz
 \makebox[\textwidth][c]{\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[x=1.3cm,y=1.3cm,>=Stealth]
-  % Ultimate 3D/Elite Loop Design - Spacing Fixed
-  \tikzset{loopnode/.style={circle, draw=Charcoal, line width=3pt, minimum size=3.8cm, align=center, fill=white, font=\LARGE\bfseries\Charcoal, drop shadow={shadow xshift=4pt, shadow yshift=-4pt, opacity=0.3}}}
-  
-  \node[loopnode, draw=GoldHighlight] (need) at (90:4.2) {NEED};
-  \node[loopnode] (build) at (210:4.2) {BUILD};
-  \node[loopnode] (validate) at (330:4.2) {VALIDATE};
-
-  % Icons (Optimized Spacing)
-  \begin{scope}[shift={(need.center)}, yshift=-0.4cm, scale=0.7]
-    \fill[GoldHighlight!15, even odd rule] (0,0.4) circle (0.6); 
-    \draw[GoldHighlight, line width=2pt] (0,0.4) circle (0.3);
-    \draw[GoldHighlight, line width=2pt] (-0.15,0.1) -- (0.15,0.1);
-    \foreach \a in {0,45,90,135,180,225,270,315} \draw[GoldHighlight, line width=1pt] (0,0.4) +(\a:0.4) -- +(\a:0.6);
-  \end{scope}
-  
-  \begin{scope}[shift={(build.center)}, yshift=-0.4cm, scale=0.7, rotate=-45]
-    \fill[Charcoal!80] (-0.08,0) rectangle (0.08,0.7); 
-    \fill[Charcoal] (-0.3,0.6) rectangle (0.3,0.9);
-  \end{scope}
-
-  \begin{scope}[shift={(validate.center)}, yshift=-0.4cm, scale=0.7]
-    \draw[SteelBlue, line width=3pt, line cap=round] (-0.3,0.2) -- (-0.05,-0.1) -- (0.4,0.5);
-  \end{scope}
-
-  % 3D-style Curved Arrows with Overlay Labels (Clean separation)
-  \tikzset{flowarrow/.style={->, line width=6pt, draw=Charcoal!90, double=white, double distance=2pt}}
-  \tikzset{flowlabel/.style={midway, font=\bfseries\sffamily\small, fill=white, inner sep=2pt, rounded corners=2pt, text=SlateGrey}}
-  
-  \draw[flowarrow] (need) to[bend right=40] node[flowlabel, left=20pt, rotate=60] {Problem Emergence} (build);
-  \draw[flowarrow] (build) to[bend right=40] node[flowlabel, below=20pt] {System Implementation} (validate);
-  \draw[flowarrow] (validate) to[bend right=40] node[flowlabel, right=20pt, rotate=-60] {Functional Feedback} (need);
-
-  % Central Graphic (Separated)
-  \draw[Charcoal!10, line width=15pt] (0,0) circle (2.1cm);
-  \node[font=\huge\bfseries\Charcoal] at (0,0.3) {CORE};
-  \node[font=\Large\bfseries\GoldHighlight] at (0,-0.4) {LOOP};
-
-  % Strategy Sub-notes
-  \node[font=\footnotesize\bfseries\GoldHighlight, align=center] at (90:2.6) {Technical\\Catalyst};
-  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (210:2.6) {Practical\\Execution};
-  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (330:2.6) {Real-world\\Check};
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex]
+  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (need) at (0,0) {Need};
+  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (build) at (6,0) {Build};
+  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (validate) at (3,-2.1) {Validate};
+  \draw[->,thick] (need) -- (build);
+  \draw[->,thick] (build) -- (validate);
+  \draw[->,thick] (validate) -- (need);
 \end{tikzpicture}%
 }}%
 \else
