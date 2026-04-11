@@ -13,16 +13,16 @@
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{float}
+\newif\ifhasticz
 \IfFileExists{balance.sty}{\usepackage{balance}}{}
 
-\newif\ifhasticz
-\IfFileExists{tikz.sty}{
-  \hasticztrue
-  \usepackage{tikz}
-  \usetikzlibrary{arrows.meta,calc,positioning}
-}{
-  \hasticzfalse
-}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric,shadows,shadings,decorations.text,fadings}
+\definecolor{Charcoal}{RGB}{40,40,40}
+\definecolor{GoldHighlight}{RGB}{218,165,32}
+\definecolor{SlateGrey}{RGB}{70,90,110}
+\definecolor{SteelBlue}{RGB}{70,130,180}
+\hasticztrue
 
 \geometry{margin=1in}
 
@@ -60,7 +60,7 @@
 \maketitle
 
 \begin{abstract}
-Traditional pedagogical models emphasize linear, curriculum-based instruction as the primary pathway for technical skill acquisition. However, an increasing demographic of "student builders" acquires complex competencies through independent, problem-driven execution. This paper presents an analytic auto-ethnographic study of these curriculum-independent learning trajectories, drawing on a longitudinal dataset of technical artifacts, version control histories, and personal documentation from 2021 to 2026. The study identifies a recursive "Need--Build--Validate" loop as the foundational mechanism of skill construction. Within this framework, skill acquisition is triggered by situated technical needs, developed through hands-on implementation, and validated by functional outcomes and community feedback. Furthermore, the study examines the role of generative Artificial Intelligence (G-AI) as a bounded scaffold in modern learning workflows. The findings offer a critical perspective on educational design, credentialing, and the evolving nature of technical expertise in an AI-integrated landscape.
+Traditional teaching models emphasize linear, curriculum-based instruction as the primary way students gain technical skills. However, an increasing number of "student builders" gain complex abilities through independent, problem-driven projects. This paper presents a long-term study of these independent learning pathways, drawing on a data from technical projects, version control histories, and personal notes from 2021 to 2026. The study identifies a repeating "Need--Build--Validate" loop as the core process of skill learning. Within this framework, learning is triggered by real-world technical needs, developed through hands-on work, and confirmed by functional results and community feedback. Furthermore, the study examines the role of generative Artificial Intelligence (G-AI) as a supporting tool in modern learning. The findings offer a fresh perspective on educational design, credentials, and the changing nature of technical expertise in a world integrated with AI.
 \end{abstract}
 
 \onecolumn
@@ -78,7 +78,7 @@ This paper addresses that gap by asking: \textbf{How do independent student buil
 
 \section{Related Work}
 
-Research on self-directed learning (SDL) has long emphasized learner autonomy, intrinsic motivation, and metacognitive regulation \citep{knowles1975,zimmerman2002}. The SDL framework identifies three foundational processes: motivational (maintaining commitment), metacognitive (planning and monitoring progress), and applied (implementing strategies and reflecting on outcomes). Contemporary research confirms that SDL skills can be systematically developed through assessment, evaluation, planning, monitoring, and adjustment cycles---a framework equally applicable to formal and informal contexts.
+Research on self-directed learning (SDL) has long emphasized student independence, internal motivation, and how learners manage their own progress \citep{knowles1975,zimmerman2002}. The SDL framework identifies three core processes: motivation (staying committed), planning (setting goals), and application (trying strategies and looking at results). Contemporary research shows that these skills can be developed through a cycle of assessment, planning, and monitoring—a method that works in both school and real-world settings.
 
 More recent studies in problem-based learning (PBL) highlight the power of authentic problem triggers in initiating learning \citep{hmelo2004}. Research demonstrates that effective triggers---problems designed with strategic clues and connection to real-world scenarios---produce significantly better learning outcomes than conventional instruction. Additionally, studies emphasize the role of ``trigger design'': problems should stimulate real-life engagement, encourage knowledge integration, fit learners' prior knowledge, and generate learning issues aligned with meaningful objectives.
 
@@ -96,37 +96,48 @@ However, most existing studies examine learning within semi-structured environme
 
 \subsection{Research Design}
 
-To investigate the mechanisms of complex skill acquisition in non-formal environments, this study utilizes an \textit{analytic auto-ethnographic} framework \citep{ellis2011}. Auto-ethnography allows for a systematic analysis of personal experience to illuminate broader cultural and technical phenomena. By treating the researcher as the primary unit of observation, this method provides granular access to internal motivations, cognitive triggers, and the iterative "wrestling" with technical systems that is often obscured in large-scale quantitative studies.
+To investigate how complex skills are gained in self-taught environments, this study uses a research method called \textit{analytic auto-ethnography} \citep{ellis2011}. This method involves a systematic analysis of personal experience to understand broader cultural and technical trends. By looking at the researcher's own journey, this study provides deep access to inner motivations and the step-by-step "wrestling" with technical systems that is often missed in large surveys.
 
-This longitudinal analysis covers technical projects and learning trajectories from 2021 to 2026, a period coinciding with the emergence of generative AI as a fundamental component of the developer ecosystem.
+This multi-year analysis covers projects and learning pathways from 2021 to 2026, a time when generative AI became a core part of the developer world.
 
 \subsection{Data Sources}
 
-The analysis is grounded in a triangulation of several primary data streams:
+The analysis is based on three main types of data:
 
 \begin{enumerate}
-\item \textbf{Technical Artifacts}: Production-level codebases, architectural prototypes, and functional web applications (e.g., IdeaBoard, WorkScape).
-\item \textbf{Version Control Metadata}: Granular Git histories that document the temporal expansion of codebases, iterative refactorings, and the introduction of new dependencies.
-\item \textbf{Heuristic Documentation}: Design specifications, reflective dev-logs, and community discussions (e.g., GitHub issues, Discord threads).
-\item \textbf{Longitudinal Skill Maps}: Reconstructed timelines correlating specific technical barriers with the subsequent acquisition of prerequisite competencies.
+\item \textbf{Technical Projects}: Production-level code, architectural designs, and working web applications (e.g., IdeaBoard, WorkScape).
+\item \textbf{Version Control Notes}: Detailed Git histories that show how projects grew, how code was improved, and when new tools were added.
+\item \textbf{Personal Records}: Design plans, developer logs, and community discussions (e.g., GitHub issues, Discord threads).
+\item \textbf{Skill Maps}: Rebuilt timelines connecting specific technical problems with the skills learned to solve them.
 \end{enumerate}
 
-Validation in this context is defined by \textit{functional efficacy} and \textit{community adoption} rather than standardized metrics, aligning with professional software engineering norms.
+In this study, success is defined by \textit{how well the project works} and \textit{if others use it}, rather than test scores.
 
 \begin{figure}[t]
 \centering
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[thick] (0,0) -- (10,0);
+\begin{tikzpicture}[x=1cm,y=1cm, node distance=1.5cm]
+  % Professional Timeline Style
+  \draw[line width=3pt, SlateGrey, -{Stealth[length=3mm]}] (0,0) -- (10.5,0);
+  
   \foreach \x/\y in {0/2021,2.5/2022,5/2023,7.5/2024,10/2025} {
-    \draw[thick] (\x,0) -- (\x,0.25);
-    \node[anchor=north] at (\x,-0.15) {\y};
+    \draw[SlateGrey, line width=1.5pt] (\x,0.15) -- (\x,-0.15);
+    \node[anchor=north, font=\small\bfseries, SlateGrey] at (\x,-0.25) {\y};
   }
-  \foreach \x/\label in {0.5/Foundations,3/Projects,5.8/Open\ Source,8.2/Systems,9.6/Research} {
-    \fill (\x,0) circle (2.2pt);
-    \node[align=center,anchor=south,font=\small] at (\x,0.35) {\label};
-  }
+
+  \tikzset{milestone/.style={circle, fill=SteelBlue!20, draw=SteelBlue, thick, inner sep=3pt, drop shadow={opacity=0.2}, font=\small\bfseries}}
+  
+  \node[milestone] (m1) at (0.5, 1.2) {Foundations};
+  \node[milestone] (m2) at (3, -1.2) {Projects};
+  \node[milestone] (m3) at (5.5, 1.2) {Open Source};
+  \node[milestone] (m4) at (8.2, -1.2) {Systems};
+  \node[milestone] (m5) at (10, 1.2) {Research};
+
+  \foreach \m in {m1,m3,m5} \draw[SteelBlue, dashed, line width=1pt] (\m.south) -- (\m |- 0,0);
+  \foreach \m in {m2,m4} \draw[SteelBlue, dashed, line width=1pt] (\m.north) -- (\m |- 0,0);
+  
+  \foreach \x in {0.5,3,5.5,8.2,10} \fill[SteelBlue] (\x,0) circle (3pt);
 \end{tikzpicture}%
 }}%
 \else
@@ -135,39 +146,39 @@ Validation in this context is defined by \textit{functional efficacy} and \texti
 \caption{Learning Milestones of an Independent Student Builder (2021--2025).}
 \end{figure}
 
-\subsection{Data Analysis: Thematic Coding and Reflexivity}
+\subsection{Analysis Process and Reflection}
 
-The data was categorized through a thematic coding process focused on trigger mechanisms, learning modes, and validation cycles. Analysis followed an iterative inductive approach, where emerging patterns were continuously tested against the technical artifacts. Key dimensions included:
+The data was grouped by focusing on what triggered the learning, how the learning happened, and how it was confirmed. The analysis followed a hands-on approach where new patterns were constantly tested against the actual projects. Key areas included:
 
 \begin{itemize}
-\item \textbf{Trigger Identification}: Classifying the impetus for learning (e.g., architectural failure, competition-driven deadlines).
-\item \textbf{Mechanism Correlation}: Mapping the relationship between the identified need and the subsequent learning mode (e.g., documentation synthesis vs. reverse-engineering).
-\item \textbf{Validation Evaluation}: Analyzing the social and functional signals that confirmed competency acquisition.
+\item \textbf{Identifying Triggers}: Categorizing what pushed the learner to start (e.g., a system crash or a project deadline).
+\item \textbf{Connecting Methods}: Mapping the relationship between the need and the way it was learned (e.g., reading guides vs. taking code apart).
+\item \textbf{Checking Success}: analyzing the social and functional signals that confirmed the skill was learned.
 \end{itemize}
 
-\subsection{Positionality and Reflexivity}
+\subsection{Researcher Perspective}
 
-In auto-ethnographic research, the researcher’s positionality is a critical factor. As a student builder deeply embedded in developer communities, I possess "insider" knowledge that allows for a nuanced reading of technical artifacts. To mitigate potential bias toward self-affirmation, I practiced active reflexivity—purposefully seeking evidence of failures, cognitive shortcuts, and instances where independent learning proved inefficient compared to formal instruction.
+In this kind of research, the researcher’s perspective is important. As a student builder active in developer communities, I have "insider" knowledge that helps me understand technical work. To stay objective, I practiced active reflection—on purpose, I looked for my own failures, shortcuts, and times where independent learning was less efficient than a regular class would have been.
 
 \section{Findings}
 
-The analysis indicates that learning without a curriculum is a non-random, structured process revolving around a recursive \textbf{Need--Build--Validate} loop. Competencies are acquired when a situated technical need arises, implemented through hands-on project execution, and validated by the functional and social performance of the resulting artifacts.
+The analysis shows that learning without a curriculum is not random. It is a structured process built around a repeating \textbf{Need--Build--Validate} loop. Skills are learned when a real-world need arises, put into action through project building, and confirmed by how well the results perform.
 
-\subsection{Skill Acquisition Triggers: The "Need" Mechanism}
+\subsection{What Triggers Learning: The "Need" Step}
 
-The study identified five primary trigger mechanisms that initiate learning trajectories. Rather than following a predefined syllabus, skill acquisition is driven by authentic challenges encountered during production.
+The study identified five main triggers that start the learning process. Instead of following a plan from a teacher, learning is driven by real challenges during work.
 
 \subsubsection{Problem-Driven Triggers}
 
-The majority of learning episodes were initiated by specific technical barriers or "walls." For example, the acquisition of React was not the result of formal instruction but was necessitated by the requirement for a dynamic user interface in a specific web application. In this model, the problem serves as the pedagogical catalyst, reversing the traditional classroom sequence where theory precedes application.
+Most learning started with a specific technical "wall." For example, learning React was not done because of a class, but because a project needed a dynamic user interface. In this model, the problem acts as the driver for learning, reversing the traditional classroom where students learn theory before ever applying it.
 
 \subsubsection{Deadline-Driven Triggers}
 
-External and internal temporal constraints served as significant motivators. Competitions, project launch dates, and self-imposed deadlines forced a prioritization of essential concepts, encouraging a "pragmatic deep dive" into the most critical documentation and implementation patterns.
+Time pressure from competitions or launch dates forced a focus on the most important skills. This encouraged a "deep dive" into the most critical guides and methods to get the job done on time.
 
 \subsubsection{Failure-Driven Triggers}
 
-Deeper conceptual understanding often emerged from system failures. Architectural breakdowns and cryptographic errors provided fertile ground for investigations into underlying principles. For instance, a Cross-Site Scripting (XSS)—a security vulnerability allowing malicious scripts to be injected into websites—necessitated a rigorous study of JSON Web Tokens (JWT) and Cross-Origin Resource Sharing (CORS) policies. Similarly, a PostgreSQL deadlock led to an investigation into transaction isolation levels and query optimization; and recurring Docker memory failures prompted an analysis of container orchestration and resource management. In these cases, the failure acted as a "diagnostic trigger" for advanced theoretical learning.
+Deep understanding often came from things going wrong. System crashes and security errors provided a chance to learn why things work the way they do. For example, a Cross-Site Scripting (XSS)—a security vulnerability where attackers inject scripts into sites—led to a deep study of JSON Web Tokens (JWT) and security policies. Similarly, a database deadlock led to a search for better query optimization. In these cases, the failure acted as a "diagnostic signal" for advanced learning.
 
 \subsubsection{Experimentation-Driven Triggers}
 
@@ -183,52 +194,38 @@ Social standards and peer expectations also functioned as learning catalysts. Ob
 \centering
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
-  \def\R{1.55}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small\sffamily]
+  \def\R{2.2}
+  \def\r{1.1} 
   \def\cx{0}
   \def\cy{0}
-  \tikzset{slice/.style={draw=black!70,thin}}
-  \tikzset{leg/.style={anchor=west,font=\small}}
+  \tikzset{slice/.style={draw=white, line width=1.5pt, drop shadow={opacity=0.3}}}
+  
+  % Full segments (40/20/15/15/10) -> angles (144/72/54/54/36)
+  % Angles: 0-144, 144-216, 216-270, 270-324, 324-360
+  
+  % Exploded callout for Problem-Driven
+  \begin{scope}[shift={(72:0.3)}]
+    \path[slice, top color=GoldHighlight, bottom color=GoldHighlight!60] (\cx,\cy) -- (0:\R) arc (0:144:\R) -- cycle;
+    \node[color=white, font=\bfseries] at (72:\R*0.7) {40\%};
+  \end{scope}
 
-  % Segments (40/20/15/15/10) -> angles (144/72/54/54/36)
-  \def\aA{0}
-  \def\aB{144}
-  \def\aC{216}
-  \def\aD{270}
-  \def\aE{324}
-  \def\aF{360}
+  \path[slice, top color=Charcoal!80, bottom color=Charcoal] (\cx,\cy) -- (144:\R) arc (144:216:\R) -- cycle;
+  \path[slice, top color=Charcoal!60, bottom color=Charcoal!80] (\cx,\cy) -- (216:\R) arc (216:270:\R) -- cycle;
+  \path[slice, top color=Charcoal!40, bottom color=Charcoal!60] (\cx,\cy) -- (270:\R) arc (270:324:\R) -- cycle;
+  \path[slice, top color=Charcoal!20, bottom color=Charcoal!40] (\cx,\cy) -- (324:\R) arc (324:360:\R) -- cycle;
+  
+  % Center cover
+  \fill[white] (\cx,\cy) circle (\r);
+  \draw[Charcoal!10, line width=1pt] (\cx,\cy) circle (\r);
+  \node[font=\bfseries\Charcoal, align=center] at (\cx,\cy) {PRIMARY\\TRIGGERS};
 
-  \path[slice,fill=black!35] (\cx,\cy) -- (\aA:\R) arc (\aA:\aB:\R) -- cycle;
-  \path[slice,fill=black!22] (\cx,\cy) -- (\aB:\R) arc (\aB:\aC:\R) -- cycle;
-  \path[slice,fill=black!15] (\cx,\cy) -- (\aC:\R) arc (\aC:\aD:\R) -- cycle;
-  \path[slice,fill=black!10] (\cx,\cy) -- (\aD:\R) arc (\aD:\aE:\R) -- cycle;
-  \path[slice,fill=white]     (\cx,\cy) -- (\aE:\R) arc (\aE:\aF:\R) -- cycle;
-  \draw[slice] (\cx,\cy) circle (\R);
-
-  % Legend
-  \def\lx{2.25}
-  \def\ly{1.10}
-  \def\sw{0.28}
-  \def\sh{0.22}
-  \fill[black!35] (\lx,\ly) rectangle (\lx+\sw,\ly+\sh);
-  \draw[black!70,thin] (\lx,\ly) rectangle (\lx+\sw,\ly+\sh);
-  \node[leg] at (\lx+0.40,\ly+0.11) {Problem-Driven (40\%)};
-
-  \fill[black!22] (\lx,\ly-0.55) rectangle (\lx+\sw,\ly-0.55+\sh);
-  \draw[black!70,thin] (\lx,\ly-0.55) rectangle (\lx+\sw,\ly-0.55+\sh);
-  \node[leg] at (\lx+0.40,\ly-0.55+0.11) {Deadline-Driven (20\%)};
-
-  \fill[black!15] (\lx,\ly-1.10) rectangle (\lx+\sw,\ly-1.10+\sh);
-  \draw[black!70,thin] (\lx,\ly-1.10) rectangle (\lx+\sw,\ly-1.10+\sh);
-  \node[leg] at (\lx+0.40,\ly-1.10+0.11) {Failure-Driven (15\%)};
-
-  \fill[black!10] (\lx,\ly-1.65) rectangle (\lx+\sw,\ly-1.65+\sh);
-  \draw[black!70,thin] (\lx,\ly-1.65) rectangle (\lx+\sw,\ly-1.65+\sh);
-  \node[leg] at (\lx+0.40,\ly-1.65+0.11) {Experimentation (15\%)};
-
-  \fill[white] (\lx,\ly-2.20) rectangle (\lx+\sw,\ly-2.20+\sh);
-  \draw[black!70,thin] (\lx,\ly-2.20) rectangle (\lx+\sw,\ly-2.20+\sh);
-  \node[leg] at (\lx+0.40,\ly-2.20+0.11) {Community (10\%)};
+  % Legend with better spacing
+  \def\lx{3.5} \def\ly{1.0} \def\sw{0.4} \def\sh{0.3}
+  \foreach \color/\label/\dy in {GoldHighlight/Problem-Driven/0, Charcoal!80/Deadline-Driven/0.7, Charcoal!60/Failure-Driven/1.4, Charcoal!40/Experimentation/2.1, Charcoal!20/Community-Driven/2.8} {
+    \fill[\color, drop shadow={opacity=0.1}] (\lx, \ly-\dy) rectangle (\lx+\sw, \ly-\dy+\sh);
+    \node[anchor=west, font=\footnotesize\bfseries\Charcoal] at (\lx+0.5, \ly-\dy+0.15) {\label};
+  }
 \end{tikzpicture}%
 }}%
 \else
@@ -237,36 +234,38 @@ Social standards and peer expectations also functioned as learning catalysts. Ob
 \caption{Breakdown of Learning Triggers (2021--2025). ``Problem-Driven'' is the most common, highlighting the importance of authentic challenges.}
 \end{figure}
 
-\subsection{Non-Linear Skill Construction: Rejecting the Linear Syllabus}
+\subsection{\textcolor{GoldHighlight}{Non-Linear Skill Learning: Moving Beyond the Step-by-Step Syllabus}}
 
-Predictably, curriculum-independent learning does not follow a linear, hierarchical sequence. Instead, it manifests as a "messy," non-linear progression consisting of three primary patterns.
+As expected, learning without a curriculum does not follow a simple, step-by-step order. Instead, it shows up as a "messy," non-linear path consisting of three primary patterns.
 
 \subsubsection{Just-in-Time Learning (JITL)}
 
-Skill acquisition occurs primarily on an "as-needed" basis. The learner may master a specific library or architectural pattern to resolve an immediate barrier, which may then remain untouched for extended periods. This Just-in-Time Learning (JITL) approach creates a profile of deep but narrow competencies, contrasting with the "broad but shallow" foundations of traditional introductory curricula.
+Skills are learned primarily on an "as-needed" basis. The learner may master a specific tool or design pattern to solve an immediate problem, which may then remain untouched for a long time. This Just-in-Time Learning (JITL) approach creates a profile of deep but narrow skills, different from the "broad but shallow" foundations of traditional introductory classes.
 
-\subsubsection{Concurrent Multi-Skill Development}
+\subsubsection{Learning Many Skills at Once}
 
-The study observed the simultaneous acquisition of disparate technical skills within a single project cycle. For instance, the development of a full-stack application required the concurrent learning of frontend frameworks, backend runtimes, database schemas, and deployment orchestration. This multidisciplinarity reflects real-world software engineering contexts better than modularized educational units.
+The study observed the simultaneous learning of different technical skills within a single project. For instance, developing a full-stack application required learning frontend tools, backend systems, databases, and deployment all at once. This combination of skills reflects real-world software work better than separate school subjects.
 
-\subsubsection{Reverse-Engineering as a Foundational Mode}
+\subsubsection{Learning by Taking Things Apart}
 
-A significant portion of learning was derived from the deconstruction of existing systems. Rather than studying algorithms in abstraction, the learner derived principles by analyzing functional codebases. This "learning-by-doing in reverse" provides a high-fidelity model of how software systems are integrated in practice.
+A large part of learning came from deconstructing existing systems. Rather than studying theory in a vacuum, the learner found principles by analyzing working code. This "learning-by-doing in reverse" provides a true model of how software systems are built and combined in practice.
 
 \begin{figure}[t]
 \centering
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\small]
-  \tikzset{nodebox/.style={draw,black!70,thick,rounded corners,fill=black!8,align=center,minimum width=4.2cm,minimum height=1.05cm}}
+\begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,font=\small]
+  \tikzset{process/.style={rectangle, draw=SteelBlue, thick, fill=white, rounded corners=0.2cm, inner sep=8pt, text width=3cm, align=center, drop shadow}}
 
-  \node[nodebox] (jit) at (0,0) {Just-in-Time\\Learning};
-  \node[nodebox] (cms) at (5.2,0) {Concurrent\\Multi-Skill};
-  \node[nodebox] (re)  at (2.6,-2.0) {Reverse-\\Engineering};
+  \node[process] (jit) at (0,0) {\textbf{Just-in-Time}\\Learning};
+  \node[process] (cms) at (5,0) {\textbf{Concurrent}\\Multi-Skill};
+  \node[process] (re)  at (2.5,-2.2) {\textbf{Reverse\\Engineering}};
 
-  \draw[->,black!70,thick] (jit) -- (cms);
-  \draw[->,black!70,thick] (cms) -- (re);
-  \draw[->,black!70,thick] (re) -- (jit);
+  \draw[->, thick, SteelBlue] (jit) -- (cms);
+  \draw[->, thick, SteelBlue] (cms) -- (re);
+  \draw[->, thick, SteelBlue] (re) -- (jit);
+  
+  \node[font=\itshape\SlateGrey, anchor=center] at (2.5,-0.6) {Recursive Flow};
 \end{tikzpicture}%
 }}%
 \else
@@ -275,38 +274,40 @@ A significant portion of learning was derived from the deconstruction of existin
 \caption{Patterns of Non-Linear Skill Acquisition.}
 \end{figure}
 
-\subsection{Validation Without Grades: The Performance of Competence}
+\subsection{Validation Without Grades: Proving What You Know}
 
-In the absence of formal assessment, skill validation is derived from functional and social signals. The study identified four primary mechanisms through which competence was verified.
+In the absence of formal tests, skills are confirmed through functional and social signals. The study identified four main ways that skills were verified.
 
-\subsubsection{Functional Outcomes as Primary Proof}
+\subsubsection{The Product as Primary Proof}
 
-The primary validation signal was simply the operational success of the artifact. The ability to build a functioning system that resolves a specific problem serves as an objective measure of competence, often carrying more weight in developer communities than standardized test scores.
+The main signal of success was simply whether the project worked. The ability to build a functioning system that solves a specific problem is an objective measure of skill, often carrying more weight in developer communities than test scores.
 
-\subsubsection{User Adoption and Feedback}
+\subsubsection{User Feedback and Use}
 
-External validation occurred when artifacts were adopted by others. Bug reports, feature requests, and user engagement provided a "market-based" validation of the learner's technical and product-design competencies.
+Skills were also confirmed when others used the projects. Bug reports, feature requests, and user engagement provided a "market-based" proof of the learner's technical and design abilities.
 
-\subsubsection{Peer Review and Contribution Acceptance}
+\subsubsection{Peer Review and Acceptance}
 
-Acceptance into open-source repositories functioned as a rigorous validation mechanism. Having contributions reviewed and merged by experienced maintainers serves as a strong signal of professional-level competence, mirroring the feedback loops found in expert-led tutoring \citep{schmidt1995}.
+Acceptance into open-source projects acted as a tough confirmation process. Having work reviewed and accepted by experienced developers is a strong signal of professional-level skill, mirroring the feedback found in expert-led tutoring \citep{schmidt1995}.
 
-\subsubsection{Public Portfolios as Credentialing Infrastructure}
+\subsubsection{Public Portfolios as Credentialing}
 
-The maintenance of a public version-control profile (e.g., GitHub) functions as a dynamic credential. Unlike static certificates, a portfolio demonstrates continuous skill application and growth over time, aligning with theories of networked and community-situated learning \citep{ito2013}.
+Maintaining a public profile (e.g., GitHub) acts as a dynamic credential. Unlike static certificates, a portfolio shows continuous skill use and growth over time, aligning with theories of community-based learning \citep{ito2013}.
 
-\textbf{Key Finding}: Unlike episodic classroom assessments, validation in this model was \textbf{continuous, multi-faceted, and externally driven}.
+\textbf{Key Finding}: Unlike school tests, confirmation in this model was \textbf{continuous, multi-faceted, and driven by the outside world}.
 
 \begin{figure}[t]
 \centering
 \ifhasticz
 \makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[x=1cm,y=1cm]
-  \def\w{6.8}
-  \foreach \y/\label/\val in {0.0/Functional Outcomes/0.80, -0.8/User Feedback/0.65, -1.6/Peer Review/0.55, -2.4/Portfolio/0.70} {
-    \node[anchor=east,font=\small] at (0,\y) {\label};
-    \fill[gray!35] (0.2,\y-0.18) rectangle ({0.2+\w*\val},\y+0.18);
-    \draw[thick] (0.2,\y-0.18) rectangle ({0.2+\w},\y+0.18);
+  \def\w{6.5}
+  \tikzset{bar/.style={line width=0.8pt, fill=SteelBlue, top color=SteelBlue!80, bottom color=SteelBlue, drop shadow={opacity=0.1}}}
+  \foreach \y/\label/\val in {0.0/Functional Outcomes/0.85, -0.9/User Feedback/0.65, -1.8/Peer Review/0.50, -2.7/Public Portfolio/0.75} {
+    \node[anchor=east, font=\small\bfseries\SlateGrey] at (0,\y) {\label};
+    \fill[bar] (0.2, \y-0.25) rectangle ({0.2+\w*\val}, \y+0.25);
+    \draw[SlateGrey!30] (0.2, \y-0.25) rectangle ({0.2+\w}, \y+0.25);
+    \node[anchor=west, font=\footnotesize\itshape, blue!60!black] at ({0.2+\w*\val}, \y) {\pgfmathparse{int(\val*100)}\pgfmathresult\%};
   }
 \end{tikzpicture}%
 }}%
@@ -348,13 +349,52 @@ When I put all these findings together, I saw a clear pattern: a recursive loop 
 \centering
 \ifhasticz
 \makebox[\textwidth][c]{\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,>=Latex]
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (need) at (0,0) {Need};
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (build) at (6,0) {Build};
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (validate) at (3,-2.1) {Validate};
-  \draw[->,thick] (need) -- (build);
-  \draw[->,thick] (build) -- (validate);
-  \draw[->,thick] (validate) -- (need);
+\begin{tikzpicture}[x=1.3cm,y=1.3cm,>=Stealth]
+  % Ultimate 3D/Elite Loop Design
+  \tikzset{loopnode/.style={circle, draw=Charcoal, line width=3pt, minimum size=3.8cm, align=center, fill=white, font=\LARGE\bfseries\Charcoal, drop shadow={shadow xshift=4pt, shadow yshift=-4pt, opacity=0.3}}}
+  
+  \node[loopnode, draw=GoldHighlight] (need) at (90:4.0) {NEED};
+  \node[loopnode] (build) at (210:4.0) {BUILD};
+  \node[loopnode] (validate) at (330:4.0) {VALIDATE};
+
+  % Detailed Icons
+  % Lightbulb with "Glow"
+  \begin{scope}[shift={(need.south)}, yshift=0.8cm, scale=0.7]
+    \fill[GoldHighlight!20, even odd rule] (0,0.4) circle (0.6); % Glow
+    \draw[GoldHighlight, line width=2pt] (0,0.4) circle (0.3);
+    \draw[GoldHighlight, line width=2pt] (-0.15,0.1) -- (0.15,0.1);
+    \draw[GoldHighlight, line width=2pt] (-0.15,0.0) -- (0.15,0.0);
+    \foreach \a in {0,45,90,135,180,225,270,315} \draw[GoldHighlight, line width=1pt] (0,0.4) +(\a:0.4) -- +(\a:0.6);
+  \end{scope}
+  
+  % Hammer
+  \begin{scope}[shift={(build.south)}, yshift=0.8cm, scale=0.7, rotate=-45]
+    \fill[Charcoal!80] (-0.08,0) rectangle (0.08,0.7); % Handle
+    \fill[Charcoal] (-0.3,0.6) rectangle (0.3,0.9); % Head
+    \draw[Charcoal, line width=1pt] (-0.3,0.6) rectangle (0.3,0.9);
+  \end{scope}
+
+  % Checkmark (Stylized Shield/Check)
+  \begin{scope}[shift={(validate.south)}, yshift=0.8cm, scale=0.7]
+    \draw[SteelBlue, line width=3pt, line cap=round] (-0.3,0.2) -- (-0.05,-0.1) -- (0.4,0.5);
+  \end{scope}
+
+  % 3D-style Curved Arrows
+  \tikzset{flowarrow/.style={->, line width=6pt, draw=Charcoal!90, double=white, double distance=2pt}}
+  
+  \draw[flowarrow] (need) to[bend right=40] node[midway, left=18pt, font=\bfseries\sffamily\SlateGrey, rotate=60] {Problem Emergence} (build);
+  \draw[flowarrow] (build) to[bend right=40] node[midway, below=18pt, font=\bfseries\sffamily\SlateGrey] {System Implementation} (validate);
+  \draw[flowarrow] (validate) to[bend right=40] node[midway, right=18pt, font=\bfseries\sffamily\SlateGrey, rotate=-60] {Functional Feedback} (need);
+
+  % Central Graphic Deep Shadow
+  \draw[Charcoal!10, line width=18pt] (0,0) circle (2.4cm);
+  \node[font=\huge\bfseries\Charcoal] at (0,0.3) {CORE};
+  \node[font=\Large\bfseries\GoldHighlight] at (0,-0.4) {LOOP};
+
+  % Details
+  \node[font=\footnotesize\bfseries\GoldHighlight, align=center] at (90:2.5) {Technical\\Impetus};
+  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (210:2.5) {Skill\\Synthesis};
+  \node[font=\footnotesize\bfseries\Charcoal, align=center] at (330:2.5) {Objective\\Verification};
 \end{tikzpicture}%
 }}%
 \else
@@ -397,43 +437,43 @@ These risks imply that AI should be used as a \textbf{bounded scaffold} rather t
 
 \section{Discussion}
 
-The recursive \textbf{Need--Build--Validate} model offers a significant framework for understanding the mechanisms of technical skill acquisition outside formal institutions. By triangulating theories of self-directed learning \citep{knowles1975,zimmerman2002}, problem-based learning \citep{hmelo2004}, and constructionism \citep{papert1980}, the model demonstrates how the intrinsic demands of technical production serve as a high-fidelity alternative to traditional curricula.
+The \textbf{Need--Build--Validate} model offers a clear framework for understanding how people learn technical skills outside of school. By combining theories of self-taught learning \citep{knowles1975,zimmerman2002}, problem-based learning \citep{hmelo2004}, and building to learn \citep{papert1980}, the model shows how the demands of technical work serve as a high-quality alternative to traditional classes.
 
-\subsection{Theoretical Implications}
+\subsection{What This Means for Theory}
 
-The study highlights a direct tension between static academic curricula and dynamic technical ecosystems. While formal programs provide foundational breadth, they often lack the temporal agility to keep pace with rapid shifts in software engineering (e.g., the transition to G-AI development). Curriculum-independent learning, by contrast, is inherently "agile," responding quickly to the immediate requirements of the technical environment.
+The study highlights a tension between fixed school curriculums and fast-changing technical worlds. While formal programs provide broad foundations, they often lack the speed to keep up with rapid shifts in software engineering (like the rise of AI tools). Independent learning, by contrast, is "agile," responding quickly to what is needed right now.
 
-However, the analysis also identifies a critical trade-off in "Just-in-Time" learning cycles. While the learner acquires deep, production-ready expertise in specific domains, they may bypass foundational concepts (e.g., database normalization or algorithmic complexity) if those concepts are not immediately necessitated by the artifact being built. This suggests that while curriculum-independent learning excels at technical \textit{performance}, it may require purposeful supplementation to ensure architectural \textit{depth}.
+However, there is a trade-off in "Just-in-Time" learning. While the learner gains deep, ready-to-use expertise in specific areas, they may miss foundational concepts if those concepts aren't needed for the current project. This suggests that while independent learning is great for \textit{performance}, it may need extra focus to ensure overall \textit{depth}.
 
 \subsection{Implications for Educational Design}
 
-The findings suggest several avenues for the evolution of formal technical education:
+The findings suggest several ways that formal education could evolve:
 
 \begin{enumerate}
-\item \textbf{Inversion of the Pedagogical Sequence}: Rather than theory-first instruction, programs should adopt a "problem-first" approach where theoretical concepts are introduced as secondary scaffolds for active project implementation.
-\item \textbf{High-Fidelity Artifact Assessment}: Institutional evaluation should shift toward professional-grade artifacts—codebases, version-control histories, and peer-reviewed contributions—which provide a more accurate signal of competency than standardized examinations \citep{lam2021}.
-\item \textbf{AI-Integrated Scaffolding}: Educational design must treat AI as a learned capability, focusing on prompt architecture, output verification, and the prevention of shallow "cognitive outsourcing."
+\item \textbf{Inversion of the Teaching Order}: Rather than teaching theory first, programs should start with a "problem-first" approach where theory is introduced to help complete a real project.
+\item \textbf{High-Quality Project Assessment}: School grading should shift toward professional-grade work—code, version control, and peer-reviewed projects—which shows true skill better than tests \citep{lam2021}.
+\item \textbf{AI-Integrated Scaffolding}: Education must treat AI as a skill to be learned, focusing on how to write prompts, verify answers, and prevent shallow learning.
 \end{enumerate}
 
-\subsection{Implications for Credentialing}
+\subsection{Implications for Credentials}
 
-As learning pathways diversify, industry and academia must develop recognition mechanisms that capture competencies achieved through independent execution:
+As learning paths change, companies and schools must find ways to recognize skills learned through independent work:
 
 \begin{enumerate}
-\item \textbf{Portfolio-Based Signaling}: Public, longitudinal artifacts (e.g., GitHub profiles) serve as high-signal credentials that demonstrate both technical proficiency and a history of self-directed growth.
-\item \textbf{Micro-Credentialing for Modular Skill-Sets}: Organizations should recognize modular, performance-based certifications that validate specific competencies acquired through Just-in-Time Learning (JITL) \citep{gallagher2022}.
-\item \textbf{Community-Validated Expertise}: Signals from developer communities—such as pull-request acceptance into major open-source projects—should be academically and professionally legible.
+\item \textbf{Portfolio-Based Signaling}: Public, long-term work (e.g., GitHub profiles) acts as a high-value credential that shows both technical skill and a history of growth.
+\item \textbf{Micro-Credentials}: Organizations should recognize smaller, performance-based certifications that prove specific skills learned "Just-in-Time" \citep{gallagher2022}.
+\item \textbf{Community Recognition}: Signals from developer communities—like having code accepted into major projects—should be recognized as proof of skill.
 \end{enumerate}
 
 \subsection{Limitations and Future Research}
 
-As an auto-ethnographic study, the generalizability of these findings is bounded by the researcher’s specific socio-technical context, motivation level, and access to resources. Future research should prioritize multi-subject studies to examine how the Need--Build--Validate loop operates across diverse backgrounds and domains (e.g., hardware engineering, data science).
+As an auto-ethnographic study, these findings are based on the researcher’s specific context, motivation, and resources. Future research should include more people to see how the Need--Build--Validate loop works for different backgrounds and fields (like hardware or data science).
 
-Furthermore, the long-term impact of generative AI on cognitive development remains an urgent area for investigation. Longitudinal studies are needed to determine whether AI scaffolding facilitates faster expertise development or, conversely, leads to the erosion of foundational debugging and problem-solving skills.
+Also, the long-term impact of AI on how we think and learn is an urgent area to study. We need to know if AI helps people become experts faster or if it leads to the loss of basic problem-solving skills.
 
 \section{Conclusion}
 
-Curriculum-independent learning is not merely a supplementary practice but a robust alternative for high-motivation technical skill acquisition. The \textbf{Need--Build--Validate} loop describes a cycle where situative technical challenges trigger deep learning, implementation produces production-ready competence, and functional success provides continuous validation. While the integration of generative AI expands access and velocity, it demands a new set of meta-competencies focused on verification and scholarly rigor. Ultimately, bridging the gap between independent building and formal recognition is essential for supporting the next generation of technical innovators in an increasingly decentralized learning landscape.
+Independent learning is not just a side activity; it is a strong alternative for motivated people. The \textbf{Need--Build--Validate} loop describes a cycle where real-world challenges trigger learning, building creates ready-to-use skills, and working products provide constant proof of success. While AI tools speed up the process, they also require new skills focused on checking and verifying work. Ultimately, bridging the gap between independent building and formal recognition is essential for supporting the next generation of technical innovators in an increasingly decentralized learning landscape.
 
 \IfFileExists{balance.sty}{\balance}{}
 \bibliographystyle{plainnat}
