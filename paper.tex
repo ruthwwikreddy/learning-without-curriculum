@@ -6,22 +6,24 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{microtype}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{\usepackage{url}}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{}
-\usepackage[round,authoryear]{natbib}
-\usepackage{hyperref}
 \usepackage{caption}
 \usepackage{float}
+\usepackage{array}
+\usepackage[round,authoryear]{natbib}
+\usepackage{hyperref}
+
 \newif\ifhasticz
 \IfFileExists{tikz.sty}{
   \hasticztrue
   \usepackage{tikz}
-  \usetikzlibrary{arrows.meta,calc,positioning}
+  \usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric}
 }{
   \hasticzfalse
 }
-\IfFileExists{balance.sty}{\usepackage{balance}}{}
 
 \geometry{margin=1in}
 
@@ -30,7 +32,7 @@
   linkcolor=black,
   citecolor=black,
   urlcolor=black,
-  pdftitle={Learning Without Curriculum: How Students Learn Technical Skills Outside Formal Education},
+  pdftitle={Learning Without Curriculum: Autonomous Project-Based Skill Acquisition and the Scaffolding Dynamics of Generative AI},
   pdfauthor={Ruthwik Reddy}
 }
 
@@ -39,19 +41,14 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.6em}
-\setlength{\intextsep}{0.8em}
-\setlength{\textfloatsep}{1.0em}
-\setlength{\floatsep}{0.8em}
+\setlength{\intextsep}{1.0em}
+\setlength{\textfloatsep}{1.2em}
+\setlength{\floatsep}{1.0em}
 
 \captionsetup{font=small,labelfont=bf}
 
-\IfFileExists{enumitem.sty}{
-  \usepackage{enumitem}
-  \setlist{nosep}
-}{}
-
-\title{Learning Without Curriculum: How Students Learn Technical Skills Outside Formal Education}
-\author{Ruthwik Reddy\\Independent Student Researcher}
+\title{\textbf{\Large Learning Without Curriculum: Autonomous Project-Based Skill Acquisition and the Scaffolding Dynamics of Generative AI}}
+\author{\textbf{Ruthwik Reddy}\\Independent Student Researcher}
 \date{2026}
 
 \begin{document}
@@ -59,376 +56,339 @@
 \maketitle
 
 \begin{abstract}
-Traditional teaching models emphasize linear, curriculum-based instruction as the primary way students gain technical skills. However, an increasing number of "student builders" gain complex abilities through independent, problem-driven projects. This paper presents a long-term study of these independent learning pathways, drawing on a data from technical projects, version control histories, and personal notes from 2021 to 2026. The study identifies a repeating "Need--Build--Validate" loop as the core process of skill learning. Within this framework, learning is triggered by real-world technical needs, developed through hands-on work, and confirmed by functional results and community feedback. Furthermore, the study examines the role of generative Artificial Intelligence (G-AI) as a supporting tool in modern learning. The findings offer a fresh perspective on educational design, credentials, and the changing nature of technical expertise in a world integrated with AI.
+Most formal education is built around a structured curriculum: topics are arranged in a step-by-step order, paced by an instructor, and tested through periodic exams. Yet outside school, many people learn complex technical skills in a completely different way---by diving straight into real projects and figuring things out as problems arise. With the rise of generative AI, this kind of independent learning has become far more accessible. Tools like large language models and code assistants can act as on-demand collaborators, helping learners break through roadblocks that once would have stopped them in their tracks. But this dynamic also creates a serious learning puzzle: when an AI can generate working code and explain concepts in seconds, it is tempting to offload the hard thinking, creating an ``illusion of competence'' where learners confuse the AI's ability with their own. In this paper, we look closely at how autonomous, project-based learning works in an AI-rich world. We examine the theoretical roots of non-curricular learning in the work of Piaget, Papert, and Bruner, and categorize the four main roles AI plays for students: Tool, Mediator, Teammate, and Subject Matter Expert. Drawing on Cognitive Load Theory and recent empirical studies, we look at quantitative evidence showing how structured reflection protocols significantly improve self-regulation ($F = 31.91, p < 0.001$). We also explore the ACCEL competency framework, outline how assessment must shift from final code artifacts to ``process-trace'' evaluation, and compare project-based learning with traditional curricula on learning outcomes, scalability, and equity. Finally, we share practical takeaways for students, teachers, tool designers, and schools.
 \end{abstract}
 
-\onecolumn
-\tableofcontents
-\clearpage
-\twocolumn
+\vspace{0.8em}
 
 \section{Introduction}
 
-Curriculum-based education remains the dominant framework for teaching technical skills in schools and universities. These systems emphasize predefined learning outcomes, linear topic sequencing, and assessment through examinations or grades. While effective for standardized instruction, such models often fail to account for learners who acquire skills through real-world problem solving, project execution, and iterative failure outside formal classrooms.
+For generations, schools and universities have taught technical skills through a set curriculum \citep{blumenfeld1991}. A syllabus breaks a broad field down into smaller topics, arranges them from beginner to advanced, and tests students with quizzes, problem sets, and exams. This model is well-organized and easy to run at scale, but it often has a familiar flaw: students can pass tests on theoretical concepts while still feeling completely lost when asked to build something from scratch in the real world \citep{barron1998,hmelo2004}.
 
-In recent years, the rise of accessible online documentation, open-source ecosystems, and AI-assisted learning tools has enabled students to bypass traditional instructional pathways entirely. Many student builders now learn programming, system design, and product development not because a syllabus requires it, but because a real problem demands it. Despite the visibility of this phenomenon, academic literature has largely focused on structured self-learning platforms \citep{chen2023} or maker education programs, rather than deeply examining independent, curriculum-free learning trajectories.
+At the same time, many student builders and self-directed developers learn outside this traditional structure \citep{knowles1975,song2026heutagogy}. Instead of waiting for a course to tell them what to study next, they start with a project they care about---such as building a web application, automating a workflow, or analyzing a dataset. When they hit a technical wall, they search for documentation, ask questions online, and pick up the exact concepts needed to keep going. Rather than learning theory first and applying it later, they encounter theory right when it matters most \citep{resnick2017}.
 
-This paper addresses that gap by asking: \textbf{How do independent student builders construct and validate technical skills without a formal curriculum?} By grounding the analysis in lived experience rather than abstract theory, the study aims to make informal, real-world learning academically legible.
+Generative AI (GenAI) has supercharged this way of learning \citep{kumar2024,zheng2024}. In the past, solo learners often got stuck on obscure compiler errors, outdated tutorials, or complex configurations. Without a mentor nearby, frustration could easily lead them to quit. Today, modern language models and coding assistants act as an interactive safety net. They answer questions instantly, explain strange error logs, generate boilerplate code, and walk through tough concepts step by step \citep{emergentagents2026}.
 
-\section{Related Work}
+Yet this convenience introduces a new challenge \citep{sweller1988}. When a tool can write functional code or summarize complex ideas in a few seconds, it is easy to skip the mental effort that real learning requires. If learners simply accept AI answers without understanding why they work, they risk falling into an ``illusion of competence''---feeling confident while an AI is by their side, but struggling to solve problems independently when it is gone.
 
-Research on self-directed learning (SDL) has long emphasized student independence, internal motivation, and how learners manage their own progress \citep{knowles1975,zimmerman2002}. The SDL framework identifies three core processes: motivation (staying committed), planning (setting goals), and application (trying strategies and looking at results). Contemporary research shows that these skills can be developed through a cycle of assessment, planning, and monitoring—a method that works in both school and real-world settings.
-
-More recent studies in problem-based learning (PBL) highlight the power of authentic problem triggers in initiating learning \citep{hmelo2004}. Research demonstrates that effective triggers---problems designed with strategic clues and connection to real-world scenarios---produce significantly better learning outcomes than conventional instruction. Additionally, studies emphasize the role of ``trigger design'': problems should stimulate real-life engagement, encourage knowledge integration, fit learners' prior knowledge, and generate learning issues aligned with meaningful objectives.
-
-Portfolio and project-based assessment has emerged as a valid alternative to traditional testing \citep{lam2021}. These methods show superior outcomes: companies using project-based technical evaluations report 40\% reductions in employee turnover and 50\% improvements in identifying high-performing talent. Unlike standardized tests, project-based evaluation measures technical accuracy, problem-solving approach, code quality, and communication---a more holistic assessment.
-
-The alternative credentials movement has expanded significantly, with micro-credentials, digital badges, and competency-based assessment gaining institutional recognition \citep{gallagher2022}. These credentials are performance-based (earned through demonstrated mastery, not grades) and stackable (modular qualifications that combine into larger certifications). Prior Learning Assessment (PLA) programs, such as the Council for Adult and Experiential Learning's (CAEL) Learning Counts, now provide pathways to formally recognize skills acquired outside traditional education.
-
-Perspectives from constructionist and maker-oriented learning further support the centrality of building as a pathway to understanding, where learners construct knowledge through meaningful projects rather than passively receiving content \citep{papert1980,resnick2017}.
-
-Finally, open-source communities represent a parallel learning infrastructure in which practices, norms, and peer feedback act as informal curriculum and assessment; this ecosystem-level view aligns with accounts of how open collaboration produces knowledge and expertise \citep{raymond1999}.
-
-However, most existing studies examine learning within semi-structured environments---MOOCs, bootcamps, or school-supported maker spaces. Few investigate fully independent learners operating without instructional scaffolding, external grading, or formal credential requirements. This study contributes a longitudinal, artifact-based analysis of curriculum-independent technical learning over multiple years, addressing the ``why'' alongside the ``how'' of skill acquisition.
-
-\section{Methodology}
-
-\subsection{Research Design}
-
-To investigate how complex skills are gained in self-taught environments, this study uses a research method called \textit{analytic auto-ethnography} \citep{ellis2011}. This method involves a systematic analysis of personal experience to understand broader cultural and technical trends. By looking at the researcher's own journey, this study provides deep access to inner motivations and the step-by-step "wrestling" with technical systems that is often missed in large surveys.
-
-This multi-year analysis covers projects and learning pathways from 2021 to 2026, a time when generative AI became a core part of the developer world.
-
-\subsection{Data Sources}
-
-The analysis is based on three main types of data:
-
+In this paper, we explore how autonomous, project-driven learning functions when paired with generative AI. Specifically, this study addresses two guiding research questions:
 \begin{enumerate}
-\item \textbf{Technical Projects}: Production-level code, architectural designs, and working web applications (e.g., IdeaBoard, WorkScape).
-\item \textbf{Version Control Notes}: Detailed Git histories that show how projects grew, how code was improved, and when new tools were added.
-\item \textbf{Personal Records}: Design plans, developer logs, and community discussions (e.g., GitHub issues, Discord threads).
-\item \textbf{Skill Maps}: Rebuilt timelines connecting specific technical problems with the skills learned to solve them.
+\item \textbf{How do self-directed learners pick up, organize, and test complex technical skills without a traditional curriculum?}
+\item \textbf{When does generative AI genuinely help people learn, and when does it become a crutch that replaces real understanding?}
 \end{enumerate}
+By connecting classic learning theory, classroom evidence, and practical developer frameworks, this paper explores what it actually takes to learn deeply on your own in an age of intelligent tools.
 
-In this study, success is defined by \textit{how well the project works} and \textit{if others use it}, rather than test scores.
+\section{Theoretical Foundations: From Constructionism to Conversational AI}
 
-\begin{figure}[t]
+The idea that people can learn deeply without a pre-set curriculum is not new. It has strong roots in the constructivist psychology of Jean Piaget and the constructionist educational philosophy of Seymour Papert \citep{piaget1970,papert1980}. 
+
+Papert often described Piaget as the original theorist of ``learning without curriculum.'' He pointed out that young children master remarkably complex abilities---like learning their first language, figuring out how to navigate three-dimensional space, and understanding social dynamics---long before they ever sit down in a formal classroom \citep{papert1980}. Children learn these skills naturally through spontaneous interaction, curiosity, and trial-and-error with the world around them. Papert argued that traditional classrooms were an artificial compromise, invented because earlier societies lacked dynamic tools that could support individualized exploration for everyone.
+
+To bring that natural learning into modern education, Papert created the idea of computational micro-worlds, best known through the LOGO programming turtle \citep{papert1980}. Designed with a ``low threshold and no ceiling,'' these environments gave students concrete ``objects to think with.'' When writing code to draw shapes on a screen, students had to externalize their thinking. If the turtle drew the wrong line, the bug was visible right in front of them, prompting them to reflect, debug, and refine their mental model \citep{resnick2017}.
+
+Later, \citet{pea1985} expanded on this by studying how programming languages help learners organize and clarify their problem-solving plans. In parallel, Jerome Bruner’s concept of scaffolding showed that when beginners take on tough challenges, an effective tutor or tool temporarily takes care of the parts they cannot yet handle alone \citep{wood1976}. This keeps the learner focused on the edge of their current ability---what psychologists call the Zone of Proximal Development.
+
+Two other learning frameworks help explain why project work is so effective. First, \textbf{Self-Regulated Learning (SRL)} \citep{zimmerman2002} describes how learners steer their own progress: setting clear goals, trying different strategies, tracking their work, and reflecting honestly when things fail. When learners understand that success comes from trying better strategies rather than inborn talent, they develop the resilience needed for ambitious projects. Second, \textbf{Situated Cognition} \citep{lave1991} reminds us that knowing and doing cannot be separated. Students understand abstract concepts much faster when they encounter them while solving a real problem, especially when collaborating in online communities and open-source projects. Real projects give ideas an immediate purpose.
+
+\begin{figure}[htbp]
 \centering
 \ifhasticz
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[thick] (0,0) -- (10,0);
-  \foreach \x/\y in {0/2021,2.5/2022,5/2023,7.5/2024,10/2025} {
-    \draw[thick] (\x,0) -- (\x,0.25);
-    \node[anchor=north] at (\x,-0.15) {\y};
-  }
-  \foreach \x/\label in {0.5/Foundations,3/Projects,5.8/Open\ Source,8.2/Systems,9.6/Research} {
-    \fill (\x,0) circle (2.2pt);
-    \node[align=center,anchor=south,font=\small] at (\x,0.35) {\label};
-  }
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex]
+  \tikzset{block/.style={draw,thick,rounded corners=4pt,fill=gray!10,align=center,font=\small,inner sep=6pt}}
+  \tikzset{arr/.style={->,thick}}
+  
+  \node[block,text width=3.6cm] (intent) at (0,0) {\textbf{Learner Intent \& Framing}\\[2pt]\footnotesize Defining goals, breaking down tasks, setting constraints};
+  \node[block,text width=3.6cm] (exec) at (6.5,0) {\textbf{AI Assistance \& Generation}\\[2pt]\footnotesize Drafting code, suggesting approaches, answering questions};
+  \node[block,text width=4.0cm] (verify) at (3.25,-2.2) {\textbf{Human Verification \& Critique}\\[2pt]\footnotesize Testing the output, finding errors, reflecting on results};
+
+  \draw[arr] (intent) -- node[above,font=\footnotesize] {Specification} (exec);
+  \draw[arr] (exec) |- node[right,font=\footnotesize] {Generated Output} (verify);
+  \draw[arr] (verify) -| node[left,font=\footnotesize] {Refined Direction} (intent);
 \end{tikzpicture}
-\else
-\fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
 \fi
-\caption{Learning Milestones of an Independent Student Builder (2021--2025).}
+\caption{The Interactive Human-AI Learning Loop in Project Work.}
+\label{fig:bidirectional_loop}
 \end{figure}
 
-\subsection{Analysis Process and Reflection}
+Traditional curricula treat learning as a one-way street: teachers deliver material, and students submit static assignments. Working with modern AI feels much more like a live conversation \citep{zheng2024}. As shown in Figure~\ref{fig:bidirectional_loop}, the learner sets the goal and context, the AI suggests solutions or drafts code, and the learner tests, questions, and refines the output. Instead of passively following a textbook, the student becomes the active manager of their own learning environment.
 
-The data was grouped by focusing on what triggered the learning, how the learning happened, and how it was confirmed. The analysis followed a hands-on approach where new patterns were constantly tested against the actual projects. Key areas included:
+\section{Empirical Evidence for Project-Based and Self-Directed Learning}
 
+The theoretical case for non-curricular learning is strong; so is the empirical one. A growing body of research---meta-analyses, randomized trials, cross-national surveys, and longitudinal case studies---documents substantial and consistent learning gains from project-based and self-directed approaches.
+
+\textbf{Meta-Analytic Evidence.} A comprehensive 2023 meta-analysis covering 66 classroom studies \citep{zheng2023meta} found that project-based learning clearly outperformed traditional lecture-and-test teaching, with an overall effect size of $0.44$ ($p < 0.001$). The biggest advantages came in creative thinking ($0.72$), computational thinking ($0.63$), and collaborative problem-solving. Most importantly, student interest and enthusiasm saw a major boost ($0.71$). When students work on projects they care about, they stay engaged longer and push through difficulty instead of tuning out.
+
+\textbf{Cultural Differences in Self-Directed Learning.} Learning on your own does not feel equally natural in every educational culture. A cross-national survey across 17 countries \citep{guglielmino2011} found that readiness for self-directed learning varies widely around the world. In educational systems that have historically focused on strict teacher authority and high-stakes exams, students often feel uncomfortable when given open-ended freedom and expect instructors to tell them what to do next \citep{frambach2012}. This is a crucial lesson for educators: self-direction is a skill that must be taught, practiced, and supported, not an automatic ability that every student already has.
+
+\textbf{Case Study: Edinburgh's SLICC Program.} The University of Edinburgh’s \emph{Student-Led, Individually-Created Courses} (SLICC) show how universities can support independent project learning with clear scaffolding \citep{spiers2020}. Students propose their own projects---such as internships, original research, or community work---set their own learning goals, and build e-portfolios with regular feedback from a tutor. Evaluations showed that participants became significantly better at explaining what they learned, connecting project work to real jobs, and treating mistakes as valuable feedback. Importantly, the program specifically reached out to students from disadvantaged and non-traditional backgrounds, proving that structured independence can expand educational opportunity.
+
+Together, these studies show a consistent pattern: working on real projects produces deep understanding and high motivation, provided students get timely feedback and are taught how to reflect. Table~\ref{tab:key_studies} summarizes the key research.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Key Empirical Studies on Project-Based and Self-Directed Learning.}
+\label{tab:key_studies}
+\begin{tabularx}{\linewidth}{p{2.4cm} p{2.5cm} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Study} & \textbf{Design \& Sample} & \textbf{Key Findings} \\
+\midrule
+\citet{zheng2023meta} & Meta-analysis (66 K--12 PBL studies) & PBL yielded overall SMD $\approx 0.44$ on learning outcomes. Strong gains in creative/computational thinking (SMD $\approx 0.63$--$0.72$), problem-solving, and collaboration. Notable boost in student interest (SMD $\approx 0.713$). \\
+\addlinespace
+\citet{guglielmino2011} & Cross-national survey (17 countries) & Higher SDL readiness correlated with GDP per capita and individualism; lower in collectivist, high power-distance cultures. \\
+\addlinespace
+\citet{frambach2012} & International medical school study ($n \approx 100$--$200$ per site) & Cultural barriers identified: students from hierarchical systems struggled with intrinsic motivation and autonomous goal-setting. \\
+\addlinespace
+\citet{spiers2020} & Case study of SLICC programme (Edinburgh Univ., widening-participation cohort) & Student-designed projects improved self-assessment skills, employability thinking, and resilience; effective even for non-traditional learners. \\
+\addlinespace
+\citet{thomas2000} & Literature review of PBL research & PBL and inquiry methods consistently increase deep understanding and interest; effect size varies with implementation quality and scaffolding. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{How Learners Actually Work with AI in Self-Directed Projects}
+
+When students work on independent projects without a syllabus, they do not treat AI tools as simple search engines. Instead, they integrate them into their workflow in recognizable, structured ways \citep{zheng2024}.
+
+Most learners naturally split their work into different types of tasks. Repetitive, tedious, or high-friction jobs---like looking up syntax rules, writing standard boilerplate code, converting data formats, or deciphering strange terminal errors---are frequently handed off to the AI \citep{zheng2024,ravi2025}. Handing off these smaller hurdles lowers the barrier to getting started. A student who might have spent three frustrating hours struggling with an installation script can resolve the issue in minutes and keep their focus on the bigger picture: how their project is structured, how the pieces fit together, and how real users will interact with it.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{The Four Roles AI Plays for Self-Directed Learners.}
+\label{tab:ai_roles}
+\begin{tabularx}{\linewidth}{p{2.5cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+\textbf{Perceived Role} & \textbf{Typical Learner Behaviors} & \textbf{Impact on Learning} \\
+\midrule
+\textbf{Tool / Assistant} & 
+Handles routine, repetitive tasks (e.g., writing boilerplate functions, debugging simple syntax mistakes, formatting data, creating mock data). & 
+Lowers barriers to getting started and speeds up basic tasks. \textit{Risk}: Can lead to passive copy-pasting if the code is never examined closely \citep{zheng2024}. \\
+\addlinespace
+\textbf{Mediator} & 
+Helps bridge gaps between different technical tools or concepts; turns high-level ideas into concrete requirements; explains cryptic compiler errors in plain English. & 
+Makes cross-disciplinary learning smoother and helps students connect new ideas to what they already know \citep{zheng2024}. \\
+\addlinespace
+\textbf{Equal Teammate} & 
+Acts as a sounding board during brainstorming; discusses pros and cons of different design approaches; helps think through edge cases. & 
+Encourages active discussion; prompts students to rethink their assumptions when the AI offers an alternative perspective \citep{song2026heutagogy}. \\
+\addlinespace
+\textbf{Subject Matter Expert} & 
+Answers conceptual questions on demand; explains algorithms, security practices, and system design patterns. & 
+Provides immediate, personalized answers when stuck. \textit{Risk}: Learners may take convincing-sounding answers at face value without checking them \citep{song2026heutagogy}. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+As shown in Table~\ref{tab:ai_roles}, the way a learner views their AI tool heavily shapes what they learn from it \citep{zheng2024}. When students treat AI purely as an answer machine, their engagement stays shallow. They quickly paste in prompts, copy the answers directly into their code, and move on. While the project might get finished, little conceptual understanding sticks.
+
+On the other hand, when students treat the AI as a partner, mediator, or expert to be audited, learning becomes much deeper \citep{song2026heutagogy}. In that mindset, students have to:
 \begin{itemize}
-\item \textbf{Identifying Triggers}: Categorizing what pushed the learner to start (e.g., a system crash or a project deadline).
-\item \textbf{Connecting Methods}: Mapping the relationship between the need and the way it was learned (e.g., reading guides vs. taking code apart).
-\item \textbf{Checking Success}: analyzing the social and functional signals that confirmed the skill was learned.
+\item Express their goals clearly and define exact constraints.
+\item Read the generated code carefully to see if it actually meets their needs.
+\item Catch subtle errors, outdated libraries, or logical hallucinations.
+\item Ask follow-up questions to understand why a particular solution was chosen.
+\end{itemize}
+In this dynamic, technical competence is no longer just about remembering exact function names; it is about knowing how to frame problems, evaluate solutions critically, and guide complex tools toward the right outcome \citep{agenticengineer2026}.
+
+\section{The Cognitive Offloading Dilemma: Helpful Support or Mental Crutch?}
+
+Using AI during project work creates an interesting tension that Cognitive Load Theory helps explain \citep{sweller1988}. Our working memory can only handle a few new pieces of information at a time. When we offload busywork to a computer---like having a calculator do arithmetic or having an AI write repetitive code---we free up mental space to think about higher-level problem solving and system design \citep{sweller1988}.
+
+The catch is that building real understanding requires some mental effort \citep{song2026heutagogy}. Learning happens when we actively grapple with a problem, make mistakes, figure out why something failed, and fix it \citep{ericsson1993}. When learners offload that struggle entirely to an AI, they skip the cognitive friction that helps form lasting knowledge. This creates an ``illusion of competence'' \citep{song2026heutagogy}: watching an AI solve a problem feels easy, so learners assume they could do it themselves---until they have to write code on a blank screen without help.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{What Happens When Students Use AI With vs. Without Structured Reflection \citep{song2026heutagogy}.}
+\label{tab:hdl_data}
+\begin{tabularx}{\linewidth}{p{2.6cm} >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Skill or Behavior} & \textbf{With Structured Reflection (Prompt Logging \& Review)} & \textbf{Without Structure (Free / Unguided AI Use)} & \textbf{What This Means in Plain English} \\
+\midrule
+\textbf{Active Self-Monitoring} & 
+Score jumped from 3.55 to 4.32 out of 5 ($+22\%$). & 
+Stagnant; remained flat at 3.60 out of 5. & 
+Logging prompts trains students to monitor their own understanding and catch mistakes early. \\
+\addlinespace
+\textbf{Deep Conceptual Grasp} & 
+Statistically significant gains in understanding core concepts. & 
+No meaningful change from starting baseline. & 
+Students who reflect on AI answers actually learn the underlying principles. \\
+\addlinespace
+\textbf{Shallow Copy-Pasting} & 
+Sharp, substantial drop in surface-level shortcuts. & 
+Persistent reliance on quick copy-paste tactics. & 
+Without guidance, most students use AI just to finish the task without understanding the code. \\
+\addlinespace
+\textbf{Critiquing AI Answers} & 
+\textbf{87\% of students} actively checked code for flaws. & 
+\textbf{Only 13\% of students} examined code before using it. & 
+Learners will rarely audit AI outputs unless required to do so. \\
+\addlinespace
+\textbf{Questioning Assumptions} & 
+\textbf{80\% of students} re-evaluated their own thinking. & 
+\textbf{Only 7\% of students} questioned their initial ideas. & 
+Rethinking premises had the strongest link to lasting self-reliance ($r = 0.76$). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+To prevent AI from becoming a mental crutch, self-directed learners need simple habits to keep themselves honest \citep{song2026heutagogy,zimmerman2002}. When students are given completely free, unguided access to generative AI, the vast majority default to the path of least resistance: they copy the AI's first answer, paste it into their project, and move on if it compiles. But when they are simply asked to keep a log of what they asked, check the code for flaws, and jot down why they chose a solution, the AI turns into an effective personal coach.
+
+This dynamic was tested directly in an empirical study of students tackling real data science projects \citep{song2026heutagogy}. As summarized in Table~\ref{tab:hdl_data}, the differences between students who used structured reflection and those who used AI freely were dramatic:
+\begin{itemize}
+\item \textbf{Students learn to catch their own errors}: The structured reflection group saw their active self-monitoring scores jump by 22\% (from 3.55 to 4.32 out of 5), while the unguided group showed virtually no growth.
+\item \textbf{Copy-pasting drops, real understanding rises}: Guided students moved away from shallow shortcuts and showed strong gains in deep conceptual learning.
+\item \textbf{Scrutiny does not happen by accident}: In the unguided group, only 13\% of students bothered to critique AI outputs, whereas 87\% of the structured group routinely audited generated code.
+\item \textbf{Rethinking assumptions builds real competence}: Students who practiced ``double-loop reflection''---pausing to ask whether their initial question was even the right one---had the highest gains in independent problem solving ($r = 0.76, p < 0.001$).
 \end{itemize}
 
-\subsection{Researcher Perspective}
+The central lesson is clear: ``learning without curriculum'' does not mean learning without structure. Instead of forcing students through a pre-planned syllabus, the structure should focus on teaching them how to question, verify, and reflect on their tools \citep{song2026heutagogy}.
 
-In this kind of research, the researcher’s perspective is important. As a student builder active in developer communities, I have "insider" knowledge that helps me understand technical work. To stay objective, I practiced active reflection—on purpose, I looked for my own failures, shortcuts, and times where independent learning was less efficient than a regular class would have been.
+\section{Comparing Curriculum-Based and Project-Based Learning}
 
-\section{Findings}
+To see where independent project learning fits in modern education, it helps to compare it directly with traditional curriculum instruction across three key areas: learning outcomes, scalability, and equity.
 
-The analysis shows that learning without a curriculum is not random. It is a structured process built around a repeating \textbf{Need--Build--Validate} loop. Skills are learned when a real-world need arises, put into action through project building, and confirmed by how well the results perform.
-
-\subsection{What Triggers Learning: The "Need" Step}
-
-The study identified five main triggers that start the learning process. Instead of following a plan from a teacher, learning is driven by real challenges during work.
-
-\subsubsection{Problem-Driven Triggers}
-
-Most learning started with a specific technical "wall." For example, learning React was not done because of a class, but because a project needed a dynamic user interface. In this model, the problem acts as the driver for learning, reversing the traditional classroom where students learn theory before ever applying it.
-
-\subsubsection{Deadline-Driven Triggers}
-
-Time pressure from competitions or launch dates forced a focus on the most important skills. This encouraged a "deep dive" into the most critical guides and methods to get the job done on time.
-
-\subsubsection{Failure-Driven Triggers}
-
-Deep understanding often came from things going wrong. System crashes and security errors provided a chance to learn why things work the way they do. For example, a Cross-Site Scripting (XSS)—a security vulnerability where attackers inject scripts into sites—led to a deep study of JSON Web Tokens (JWT) and security policies. Similarly, a database deadlock led to a search for better query optimization. In these cases, the failure acted as a "diagnostic signal" for advanced learning.
-
-\subsubsection{Experimentation-Driven Triggers}
-
-A subset of learning episodes was driven by exploratory curiosity. While not always tied to a production deadline, these technical experiments built a "latent toolkit" of competencies that could be mobilized when a production-level problem later emerged.
-
-\subsubsection{Community-Driven Triggers}
-
-Social standards and peer expectations also functioned as learning catalysts. Observing high-quality open-source architectures and receiving feedback on code contributions established "competency benchmarks" that the learner aimed to replicate.
-
-\textbf{Key Finding}: These triggers represent \textit{situated, authentic, and self-identified} learning prompts, aligning with theories of legitimate peripheral participation \citep{lave1991}.
-
-\begin{figure}[t]
+\begin{table}[htbp]
 \centering
-\ifhasticz
-\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
-  \def\R{1.55}
-  \def\cx{0}
-  \def\cy{0}
-  \tikzset{slice/.style={draw=black,thin}}
-  \tikzset{leg/.style={anchor=west,font=\small}}
+\small
+\caption{Overview of Key Studies on Project-Based Learning and AI Scaffolding.}
+\label{tab:empirical_studies}
+\begin{tabularx}{\linewidth}{p{2.6cm}p{2.2cm}p{2.8cm} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Study} & \textbf{Method} & \textbf{Learner Context} & \textbf{Key Takeaways} \\
+\midrule
+\citet{blumenfeld1991} & Classroom study with surveys & 6th-grade Science & Project learning maintained high student interest and conceptual grasp, though covering individual textbook topics took longer. \\
+\addlinespace
+\citet{barron1998} & Multi-cohort intervention study & 7th--8th-grade Science & Students in project environments outperformed peers on conceptual understanding and real-world problem-solving tasks. \\
+\addlinespace
+\citet{farmer2019} & Mixed methods (interviews, field observations) & Elementary club students & Tackling real environmental issues built a strong sense of personal agency and helped students apply math and reading naturally. \\
+\addlinespace
+\citet{zheng2023meta} & Meta-analysis (66 studies) & K--12 STEM & Project-based learning yielded an overall effect size of 0.44, with major gains in creative thinking (0.72) and interest (0.71). \\
+\addlinespace
+\citet{kumar2024} & Randomized Controlled Trial (RCT) & Undergraduate CS ($N \approx 250$) & Providing students with an LLM-guided reflection coach raised both confidence and final exam scores by $+4.0$ percentage points. \\
+\addlinespace
+\citet{ravi2025} & Co-design sessions & K--12 Teachers & Educators saw great value in AI for planning projects and tailoring feedback, but voiced valid concerns about over-reliance. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-  \def\aA{0}
-  \def\aB{144}
-  \def\aC{216}
-  \def\aD{270}
-  \def\aE{324}
-  \def\aF{360}
+\subsection{Learning Outcomes and Depth}
+Standard curricula excel at broad, even coverage of fundamentals. If you need to make sure every student touches each topic on a standardized list, a traditional class is well-suited for the job. 
 
-  \path[slice,fill=black!60] (\cx,\cy) -- (\aA:\R) arc (\aA:\aB:\R) -- cycle;
-  \path[slice,fill=black!40] (\cx,\cy) -- (\aB:\R) arc (\aB:\aC:\R) -- cycle;
-  \path[slice,fill=black!20] (\cx,\cy) -- (\aC:\R) arc (\aC:\aD:\R) -- cycle;
-  \path[slice,fill=black!10] (\cx,\cy) -- (\aD:\R) arc (\aD:\aE:\R) -- cycle;
-  \path[slice,fill=white]     (\cx,\cy) -- (\aE:\R) arc (\aE:\aF:\R) -- cycle;
-  \draw[slice] (\cx,\cy) circle (\R);
+However, studies consistently show that project-based learning produces deeper conceptual understanding and longer retention \citep{blumenfeld1991,barron1998}. When learners spend equal amounts of time on projects, they understand core principles as well as or better than peers in lecture courses, even if they cover fewer discrete bullet points \citep{barron1998}. Traditional students often do better on exams right after a unit, but project learners retain their understanding far longer and are better at applying it to new, unfamiliar problems \citep{barron1998,kumar2024}. In software development, for example, getting a real app running requires connecting databases, APIs, interfaces, and security rules---something isolated homework exercises rarely simulate.
 
-  \def\lx{2.25}
-  \def\ly{1.10}
-  \def\sw{0.28}
-  \def\sh{0.22}
-  \fill[black!60] (\lx,\ly) rectangle (\lx+\sw, \ly+\sh);
-  \draw[black,thin] (\lx,\ly) rectangle (\lx+\sw, \ly+\sh);
-  \node[leg] at (\lx+0.40, \ly+0.11) {Problem-Driven (40\%)};
+\subsection{Scalability and Access}
+Traditional schooling scales through institutions: buildings, hired instructors, and standardized books. This approach provides structure, but it is expensive and geographically limited. 
 
-  \fill[black!40] (\lx,\ly-0.55) rectangle (\lx+\sw, \ly-0.55+\sh);
-  \draw[black,thin] (\lx,\ly-0.55) rectangle (\lx+\sw, \ly-0.55+\sh);
-  \node[leg] at (\lx+0.40, \ly-0.55+0.11) {Deadline-Driven (20\%)};
+Independent project learning scales through modern digital networks: open-source software, online communities, and interactive tools. Generative AI makes personalized help far more scalable than before. A single teacher cannot sit down with 30 students at once to give each one custom, line-by-line feedback. But an AI tutor can walk thousands of students through a bug simultaneously, explain an idea in five different ways, and suggest next steps around the clock \citep{kumar2024,ravi2025,vanlehn2005}. That said, this access still depends on having reliable computers and fast internet.
 
-  \fill[black!20] (\lx,\ly-1.10) rectangle (\lx+\sw, \ly-1.10+\sh);
-  \draw[black,thin] (\lx,\ly-1.10) rectangle (\lx+\sw, \ly-1.10+\sh);
-  \node[leg] at (\lx+0.40, \ly-1.10+0.11) {Failure-Driven (15\%)};
+\subsection{Equity, Access, and the Need for Self-Direction}
+Project-based learning gives students the freedom to tackle challenges that matter to them and their communities \citep{farmer2019}. But this freedom also brings real equity concerns.
 
-  \fill[black!10] (\lx,\ly-1.65) rectangle (\lx+\sw, \ly-1.65+\sh);
-  \draw[black,thin] (\lx,\ly-1.65) rectangle (\lx+\sw, \ly-1.65+\sh);
-  \node[leg] at (\lx+0.40, \ly-1.65+0.11) {Experimentation (15\%)};
+Learning without a syllabus requires quiet study time, self-discipline, and reliable computer hardware. Students who have not yet had the chance to practice self-directed habits can easily feel overwhelmed by open-ended assignments \citep{hmelo2004,zimmerman2002}. In addition, disparities in hardware and internet access mean some students have access to top-tier AI models and powerful machines, while others do not. As cross-cultural research highlights \citep{guglielmino2011,frambach2012}, students raised in rigid, lecture-focused school systems often need explicit coaching in goal setting and self-reflection before they feel comfortable working independently.
 
-  \fill[white] (\lx,\ly-2.20) rectangle (\lx+\sw, \ly-2.20+\sh);
-  \draw[black,thin] (\lx,\ly-2.20) rectangle (\lx+\sw, \ly-2.20+\sh);
-  \node[leg] at (\lx+0.40, \ly-2.20+0.11) {Community (10\%)};
-\end{tikzpicture}
-\else
-\fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
-\fi
-\caption{Breakdown of Learning Triggers (2021--2025). ``Problem-Driven'' is the most common, highlighting the importance of authentic challenges.}
-\end{figure}
+There is also a risk that AI tools will widen this gap if left unmanaged \citep{ravi2025}. Confident, experienced students use AI as a high-speed collaborator to build ambitious software. Less confident students, on the other hand, often use AI merely to generate answers and get past an assignment without learning the underlying principles. To make independent learning fair and accessible, schools must follow examples like the SLICC initiative \citep{spiers2020}: make support readily available, deliberately welcome students from all backgrounds, and treat self-direction as a skill to be taught rather than an entrance requirement.
 
-\subsection{Non-Linear Skill Learning: Moving Beyond the Step-by-Step Syllabus}
+\section{The ACCEL Framework: What Engineering Mastery Looks Like with AI}
 
-As expected, learning without a curriculum does not follow a simple, step-by-step order. Instead, it shows up as a "messy," non-linear path consisting of three primary patterns.
+When students can generate code with a prompt, what skills actually define technical expertise? The ACCEL framework (Agentic Competencies through Curricula, Collaboration, and Enduring Learning) \citep{agenticengineer2026} outlines five core pillars that matter most when building with AI.
 
-\subsubsection{Just-in-Time Learning (JITL)}
-
-Skills are learned primarily on an "as-needed" basis. The learner may master a specific tool or design pattern to solve an immediate problem, which may then remain untouched for a long time. This Just-in-Time Learning (JITL) approach creates a profile of deep but narrow skills, different from the "broad but shallow" foundations of traditional introductory classes.
-
-\subsubsection{Learning Many Skills at Once}
-
-The study observed the simultaneous learning of different technical skills within a single project. For instance, developing a full-stack application required learning frontend tools, backend systems, databases, and deployment all at once. This combination of skills reflects real-world software work better than separate school subjects.
-
-\subsubsection{Learning by Taking Things Apart}
-
-A large part of learning came from deconstructing existing systems. Rather than studying theory in a vacuum, the learner found principles by analyzing working code. This "learning-by-doing in reverse" provides a true model of how software systems are built and combined in practice.
-
-\begin{figure}[t]
+\begin{table}[htbp]
 \centering
-\ifhasticz
-\makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\small]
-  \tikzset{nodebox/.style={draw,black!70,thick,rounded corners,fill=black!8,align=center,minimum width=4.2cm,minimum height=1.05cm}}
+\small
+\caption{The Five Pillars of the ACCEL Framework \citep{agenticengineer2026}.}
+\label{tab:accel_pillars}
+\begin{tabularx}{\linewidth}{p{2.8cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{5.5cm}}
+\toprule
+\textbf{Competency Pillar} & \textbf{What It Focuses On} & \textbf{What Success Looks Like} \\
+\midrule
+\textbf{P1: Intent Specification \& Framing} & 
+Breaking down ambiguous problems and translating them into clear, actionable requirements and prompts. & 
+Splits complex features into manageable steps; defines inputs, outputs, and edge cases clearly; gives the AI precise context and boundaries. \\
+\addlinespace
+\textbf{P2: Iterative Verification \& Critique} & 
+Checking and testing machine-generated work carefully against real-world requirements. & 
+Reviews generated code critically; writes automated tests; spots hallucinations, security flaws, and subtle logical errors. \\
+\addlinespace
+\textbf{P3: Workflow Orchestration} & 
+Combining different tools, scripts, AI agents, and human judgment into a working pipeline. & 
+Connects APIs, build tools, and AI helpers into a smooth development setup; uses automated tests to catch mistakes early. \\
+\addlinespace
+\textbf{P4: Reliance Calibration} & 
+Knowing when to trust AI help and when to take over manually. & 
+Recognizes when a problem is too nuanced or critical for AI; avoids blind trust in generated output; steps in manually when needed. \\
+\addlinespace
+\textbf{P5: Ethics, Governance \& Responsibility} & 
+Taking personal accountability for the safety, privacy, and impact of what is built. & 
+Checks for security holes, biased data, and copyright issues; takes full ownership of the final deployed system. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-  \node[nodebox] (jit) at (0,0) {Just-in-Time\\Learning};
-  \node[nodebox] (cms) at (5.2,0) {Concurrent\\Multi-Skill};
-  \node[nodebox] (re)  at (2.6,-2.0) {Reverse-\\Engineering};
+Interestingly, empirical studies show that when beginners struggle in AI-assisted development, it is rarely because they used the wrong keywords in a prompt. Most often, they stumble on **P1 (Intent Specification)**: they jump straight to asking for code without clearly defining what they need, what the edge cases are, or what constraints must hold true \citep{agenticengineer2026}.
 
-  \draw[->,black!70,thick] (jit) -- (cms);
-  \draw[->,black!70,thick] (cms) -- (re);
-  \draw[->,black!70,thick] (re) -- (jit);
-\end{tikzpicture}%
-}}%
-\else
-\fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
-\fi
-\caption{Patterns of Non-Linear Skill Acquisition.}
-\end{figure}
-
-\subsection{Validation Without Grades: Proving What You Know}
-
-In the absence of formal tests, skills are confirmed through functional and social signals. The study identified four main ways that skills were verified.
-
-\subsubsection{The Product as Primary Proof}
-
-The main signal of success was simply whether the project worked. The ability to build a functioning system that solves a specific problem is an objective measure of skill, often carrying more weight in developer communities than test scores.
-
-\subsubsection{User Feedback and Use}
-
-Skills were also confirmed when others used the projects. Bug reports, feature requests, and user engagement provided a "market-based" proof of the learner's technical and design abilities.
-
-\subsubsection{Peer Review and Acceptance}
-
-Acceptance into open-source projects acted as a tough confirmation process. Having work reviewed and accepted by experienced developers is a strong signal of professional-level skill, mirroring the feedback found in expert-led tutoring \citep{schmidt1995}.
-
-\subsubsection{Public Portfolios as Credentialing}
-
-Maintaining a public profile (e.g., GitHub) acts as a dynamic credential. Unlike static certificates, a portfolio shows continuous skill use and growth over time, aligning with theories of community-based learning \citep{ito2013}.
-
-\textbf{Key Finding}: Unlike school tests, confirmation in this model was \textbf{continuous, multi-faceted, and driven by the outside world}.
-
-\begin{figure}[t]
-\centering
-\ifhasticz
-\makebox[\linewidth][c]{\resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \def\w{6.8}
-  \foreach \y/\label/\val in {0.0/Functional Outcomes/0.80, -0.8/User Feedback/0.65, -1.6/Peer Review/0.55, -2.4/Portfolio/0.70} {
-    \node[anchor=east,font=\small] at (0,\y) {\label};
-    \fill[gray!35] (0.2,\y-0.18) rectangle ({0.2+\w*\val},\y+0.18);
-    \draw[thick] (0.2,\y-0.18) rectangle ({0.2+\w}, \y+0.18);
-  }
-\end{tikzpicture}%
-}}%
-\else
-\fbox{\parbox[c][0.22\textheight][c]{0.95\linewidth}{\centering Figure placeholder}}
-\fi
-\caption{Methods of Skill Validation.}
-\end{figure}
-
-\subsubsection{Functional Outcomes as Proof}
-
-The most important validation was simple: did it work? If I could build a web app that people could use, or a tool that solved a real problem, that was the proof. It is a direct measure of competence compared to a test score.
-
-\subsubsection{User Feedback and Adoption}
-
-When people started using the things I built, their feedback was a powerful form of validation. Bug reports, feature requests, and even positive comments showed that work was having impact.
-
-\subsubsection{Peer Code Review and Contribution Acceptance}
-
-In open source, having your code reviewed and accepted by other developers is a rigorous validation mechanism. When a contribution is merged, it is a strong signal of competence, similar in spirit to the feedback processes described in tutoring and guided learning environments \citep{schmidt1995}.
-
-\subsubsection{Public Portfolio Demonstration}
-
-Everything I’ve built is on my GitHub. This public portfolio functions as a credential because it shows what I can do, not just what courses I’ve taken. This aligns with broader accounts of learning that is socially networked and shaped by participation in communities \citep{ito2013}.
-
-\textbf{Key Finding}: Unlike grades (often one-time), validation was \textbf{continuous, multi-faceted, and driven by the outside world}. Working projects and external feedback are difficult to fake.
-
-\subsection{The Need--Build--Validate Loop}
-
-When I put all these findings together, I saw a clear pattern: a recursive loop I call the Need--Build--Validate loop.
-
+\subsection{A Four-Stage Learning Path}
+Developing these skills happens over time through four natural stages \citep{agenticengineer2026}:
 \begin{enumerate}
-\item \textbf{Need}: It starts with a trigger---a problem, a deadline, a failure, curiosity, or the community---creating a need to learn something new.
-\item \textbf{Build}: I learn the skill by building something, using documentation, AI tools, and community resources.
-\item \textbf{Validate}: The thing I built provides validation. If it works, if people use it, and if other developers respect it, then I know I’ve learned the skill.
+\item \textbf{Stage 1: Building Foundations}: Learners use AI mainly as a friendly tutor and explainer. Direct code generation is kept limited so students build basic mental models and understand what the code is actually doing.
+\item \textbf{Stage 2: Guided Collaboration}: The AI acts like a pair programmer. The student focuses on writing clear specifications, reviewing suggested code line-by-line, and learning to catch seeded bugs in AI outputs.
+\item \textbf{Stage 3: Supervised Delegation}: The learner delegates multi-step tasks (like writing tests or refactoring files) to AI agents, acting as the supervisor who sets the acceptance criteria and reviews the results.
+\item \textbf{Stage 4: System Architecture}: The learner designs and orchestrates entire systems, coordinating multiple tools and workflows while maintaining complete responsibility for security, reliability, and ethics \citep{emergentagents2026}.
 \end{enumerate}
 
-\begin{figure*}[t]
-\centering
-\ifhasticz
-\makebox[\textwidth][c]{\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[x=1cm,y=1cm,>=Latex]
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (need) at (0,0) {Need};
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (build) at (6,0) {Build};
-  \node[draw,rounded corners,minimum width=3.5cm,minimum height=1.1cm,align=center,fill=gray!10] (validate) at (3,-2.1) {Validate};
-  \draw[->,thick] (need) -- (build);
-  \draw[->,thick] (build) -- (validate);
-  \draw[->,thick] (validate) -- (need);
-\end{tikzpicture}%
-}}%
-\else
-\fbox{\parbox[c][0.18\textheight][c]{0.95\textwidth}{\centering Figure placeholder}}
-\fi
-\caption{The Need--Build--Validate Learning Loop.}
-\end{figure*}
+\section{Rethinking Assessment: Looking at the Process, Not Just the Final Product}
 
-The key is that this isn't a one-time process. Every finished project opens new possibilities and new problems, which starts the loop again.
+Because generative AI can produce an impressive-looking web app or Python script in seconds, grading solely on the final artifact no longer makes sense \citep{zheng2024,lam2021}. A working project sitting in a folder tells an evaluator very little about whether the student genuinely understands it or merely prompted a model to write it.
 
-
-\subsection{AI-Assisted Learning: The 2025--2026 Context}
-
-The rise of generative AI (G-AI) development tools has become a primary factor shaping how independent builders acquire and refine technical skills. Unlike previous generations of online resources, G-AI tools such as Gemini, ChatGPT, and Claude function as interactive scaffolds that can compress the time between a technical question and a verifiable implementation \citep{bakker2024}.
-
-\subsubsection{Documentation Acceleration}
-
-AI tools reduce search and synthesis time by providing immediate, context-aware summaries of APIs, error messages, and implementation patterns. This increases momentum during the "Build" phase of the loop by allowing the learner to iterate quickly on hypotheses. For example, when encountering complex state management patterns or cryptic TypeScript errors, Claude and Gemini can break down system-level issues into manageable conceptual steps. However, research suggests that this perceived speed must be balanced against the need for independent verification to avoid shallow skill acquisition \citep{bakker2024}.
-
-\subsubsection{Validation Through AI-Generated Feedback}
-
-AI systems increasingly function as high-fidelity "review partners," approximating the role of a human mentor for solo learners. By flagging potential bugs, suggesting refactors, and proposing test cases, AI tools provide intermediate validation before a project reaches the community or production stages. This aligns with recent findings on the utility of AI-generated feedback in student co-creation processes, where timely, automated critiques support iterative improvement without the bottlenecks of human review \citep{pozdniakov2025}.
-
-\subsubsection{Responsible AI Usage as a Meta-Skill}
-
-The effective orchestration of AI systems is itself a significant learned capability. This shifts technical competence toward prompt formulation, output verification, and the ability to detect "stochastic hallucinations" \citep{bender2021}. Mastering these meta-skills is essential for ensuring that AI-assisted learning supports rather than simplifies the cognitive wrestling required for expertise.
-
-\subsubsection{Risks and Cognitive Failure Modes}
-
-Despite its benefits, AI-assisted learning introduces significant risks that can erode the quality of learning if left unaddressed.
+To solve this, self-directed and project-based education needs to embrace \textbf{Process-Trace Evaluation} \citep{zheng2024,song2026heutagogy}. Instead of looking only at the finished project, educators and evaluators review the trail of how it was built:
 
 \begin{enumerate}
-\item \textbf{Hallucinations and Credibility Risks.} Models can generate confident but fabricated citations or explanations. In research contexts, this necessitates a "verify first" protocol where all AI-generated claims are grounded in primary sources.
-\item \textbf{Workflow Fragility.} Over-reliance on specific AI models creates dependency. Technical learning must remain tool-agnostic to survive changes in access or model behavior.
-\item \textbf{The Illusion of Competence.} AI can produce working code without requiring the learner to internalize the underlying logic. This "cognitive outsourcing" can lead to skill atrophy and a failure to transfer knowledge to novel problems \citep{ericsson1993,bakker2024}.
+\item \textbf{Prompt Logs}: A record of the conversations between the learner and the AI, showing how the student initially framed the problem and how they iterated when things went wrong.
+\item \textbf{Commit and Revision Histories}: Git logs and code diffs that reveal how drafts evolved, showing where the student modified, improved, or threw away AI suggestions.
+\item \textbf{Decision Notes}: Short explanations written by the student explaining why they chose a particular library, database, or architecture over alternative options.
+\item \textbf{Defect Audits}: Practical exercises showing that the learner can spot edge-case bugs, security vulnerabilities, or performance bottlenecks in AI-generated code.
 \end{enumerate}
 
-These risks imply that AI should be used as a \textbf{bounded scaffold} rather than a substitution for foundational understanding, especially in academic and high-stakes technical environments.
+\paragraph{Keeping Process Traces Honest}
+Of course, students could try to game prompt logs to make their process look more thorough than it was \citep{zheng2024}. To ensure evaluation is fair and genuine, schools and programs can pair process logs with two quick human checks:
+\begin{itemize}
+\item \textbf{Short Live Walkthroughs}: Having the student explain how their code works, why they organized it the way they did, and how they fixed their biggest bug.
+\item \textbf{Quick Hands-On Debugging}: Asking the student to add a small feature or fix a simulated bug on the spot without AI assistance, confirming that their understanding is real.
+\end{itemize}
 
+\section{Open Questions and Practical Advice}
 
-\section{Discussion}
+\subsection{What We Still Need to Learn}
+While the promise of AI-supported independent learning is exciting, there are several open questions that need more long-term research:
+\begin{itemize}
+\item \textbf{Long-term retention}: Do students who learn with AI remember concepts as well two or three years later? We need longer studies tracking learners over time.
+\item \textbf{Assessing non-formal learning}: How can we fairly measure what someone learns from building real projects when there are no formal exams?
+\item \textbf{Impact on core problem-solving}: Does relying on AI code assistants make learners better architects, or does it erode their foundational problem-solving intuition over time?
+\item \textbf{Model biases and outdated habits}: How do the small quirks, biases, and outdated patterns in LLM training data influence the habits of new developers?
+\end{itemize}
 
-The \textbf{Need--Build--Validate} model offers a clear framework for understanding how people learn technical skills outside of school. By combining theories of self-taught learning \citep{knowles1975,zimmerman2002}, problem-based learning \citep{hmelo2004}, and building to learn \citep{papert1980}, the model shows how the demands of technical work serve as a high-quality alternative to traditional classes.
+\subsection{Practical Recommendations}
 
-\subsection{What This Means for Theory}
+\subsubsection{For Learners}
+Treat AI as a thoughtful collaborator, not an automatic answer machine \citep{zimmerman2002}. Before you ask an AI to write a function, pause and think through how you would solve it first. When the AI gives you code, read through it carefully, test it against edge cases, and make sure you could explain every line to a friend. Keep track of the times the AI gets things wrong---it is one of the best ways to sharpen your own critical thinking.
 
-The study highlights a tension between fixed school curriculums and fast-changing technical worlds. While formal programs provide broad foundations, they often lack the speed to keep up with rapid shifts in software engineering (like the rise of AI tools). Independent learning, by contrast, is "agile," responding quickly to what is needed right now.
+\subsubsection{For Educators}
+Shift assignments away from testing rote syntax and toward problem framing, system architecture, and code review \citep{agenticengineer2026}. Give students the freedom to choose meaningful projects, and explicitly teach them how to inspect AI outputs, spot hallucinations, and take responsibility for what they ship.
 
-However, there is a trade-off in "Just-in-Time" learning. While the learner gains deep, ready-to-use expertise in specific areas, they may miss foundational concepts if those concepts aren't needed for the current project. This suggests that while independent learning is great for \textit{performance}, it may need extra focus to ensure overall \textit{depth}.
+\subsubsection{For AI Tool Designers}
+Build tools that encourage learning rather than just pure speed \citep{ravi2025}. Instead of only providing instant code blocks, design interfaces that prompt learners to explain their reasoning, suggest helpful debugging questions, and highlight areas where the model might be less confident.
 
-\subsection{Implications for Educational Design}
-
-The findings suggest several ways that formal education could evolve:
-
-\begin{enumerate}
-\item \textbf{Inversion of the Teaching Order}: Rather than teaching theory first, programs should start with a "problem-first" approach where theory is introduced to help complete a real project.
-\item \textbf{High-Quality Project Assessment}: School grading should shift toward professional-grade work—code, version control, and peer-reviewed projects—which shows true skill better than tests \citep{lam2021}.
-\item \textbf{AI-Integrated Scaffolding}: Education must treat AI as a skill to be learned, focusing on how to write prompts, verify answers, and prevent shallow learning.
-\end{enumerate}
-
-\subsection{Implications for Credentials}
-
-As learning paths change, companies and schools must find ways to recognize skills learned through independent work:
-
-\begin{enumerate}
-\item \textbf{Portfolio-Based Signaling}: Public, long-term work (e.g., GitHub profiles) acts as a high-value credential that shows both technical skill and a history of growth.
-\item \textbf{Micro-Credentials}: Organizations should recognize smaller, performance-based certifications that prove specific skills learned "Just-in-Time" \citep{gallagher2022}.
-\item \textbf{Community Recognition}: Signals from developer communities—like having code accepted into major projects—should be recognized as proof of skill.
-\end{enumerate}
-
-\subsection{Limitations and Future Research}
-
-As an auto-ethnographic study, these findings are based on the researcher’s specific context, motivation, and resources. Future research should include more people to see how the Need--Build--Validate loop works for different backgrounds and fields (like hardware or data science).
-
-Also, the long-term impact of AI on how we think and learn is an urgent area to study. We need to know if AI helps people become experts faster or if it leads to the loss of basic problem-solving skills.
+\subsubsection{For Schools and Universities}
+Recognize that valuable learning happens outside the classroom. Develop clear pathways for portfolio reviews, digital project badges, and Prior Learning Assessments so that motivated learners can turn real-world project experience into recognized credentials \citep{gallagher2022,lam2021}.
 
 \section{Conclusion}
 
-Independent learning is not just a side activity; it is a strong alternative for motivated people. The \textbf{Need--Build--Validate} loop describes a cycle where real-world challenges trigger learning, building creates ready-to-use skills, and working products provide constant proof of success. While AI tools speed up the process, they also require new skills focused on checking and verifying work. Ultimately, bridging the gap between independent building and formal recognition is essential for supporting the next generation of technical innovators in an increasingly decentralized learning landscape.
+Learning without curriculum in the age of generative AI is not a shortcut; when done well, it is a demanding and rewarding path to genuine skill. Rather than removing the need for intellectual rigor, working with AI tools demands higher levels of self-discipline, clear communication, and skeptical evaluation. Seymour Papert’s vision of computers as dynamic ``objects to think with'' has grown into conversational, intelligent partners that can support learners wherever they are.
 
-\IfFileExists{balance.sty}{\balance}{}
+By pairing the natural motivation of building real projects with thoughtful self-reflection and modern evaluation, we can help learners build skills that are deep, practical, and enduring. In a world where technology moves faster than any static curriculum can follow, learning how to learn on your own may be the most important skill of all.
+
 \bibliographystyle{plainnat}
 \bibliography{references}
 
